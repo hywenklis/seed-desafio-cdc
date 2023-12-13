@@ -22,6 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
