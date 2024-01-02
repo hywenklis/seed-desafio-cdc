@@ -15,21 +15,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ErrorHandler {
 
-
   @ExceptionHandler(AuthorAlreadyExistsException.class)
-  public ResponseEntity<ErrorResponse> handleAuthorAlreadyExistsException(
-      AuthorAlreadyExistsException ex) {
-    ErrorDetails error = new ErrorDetails(
-        "email",
-        ex.getMessage(),
-        HttpStatus.CONFLICT,
-        HttpStatus.CONFLICT.value(),
-        LocalDateTime.now());
-    return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(List.of(error)));
+  public ResponseEntity<ErrorResponse>
+  handleAuthorAlreadyExistsException(AuthorAlreadyExistsException ex) {
+    ErrorDetails error =
+        new ErrorDetails("email", ex.getMessage(), HttpStatus.CONFLICT,
+                         HttpStatus.CONFLICT.value(), LocalDateTime.now());
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(new ErrorResponse(List.of(error)));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
+  public ResponseEntity<ErrorResponse>
+  handleValidationErrors(MethodArgumentNotValidException ex) {
     List<ErrorDetails> errors = mapValidationErrors(ex.getBindingResult());
     return ResponseEntity.badRequest().body(new ErrorResponse(errors));
   }
@@ -37,13 +35,11 @@ public class ErrorHandler {
   private List<ErrorDetails> mapValidationErrors(BindingResult bindingResult) {
     return bindingResult.getFieldErrors()
         .stream()
-        .map(fieldError -> new ErrorDetails(
-            fieldError.getField(),
-            fieldError.getDefaultMessage(),
-            HttpStatus.BAD_REQUEST,
-            HttpStatus.BAD_REQUEST.value(),
-            LocalDateTime.now()
-        ))
+        .map(fieldError
+             -> new ErrorDetails(
+                 fieldError.getField(), fieldError.getDefaultMessage(),
+                 HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(),
+                 LocalDateTime.now()))
         .toList();
   }
 }

@@ -12,5 +12,4 @@ public interface AuthorDomainMapper {
 
   @Mapping(target = "id", ignore = true)
   AuthorEntity mapToEntity(AuthorDto authorDto);
-
 }

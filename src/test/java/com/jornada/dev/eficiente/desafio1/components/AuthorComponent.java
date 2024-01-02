@@ -10,24 +10,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorComponent {
 
-  @Autowired
-  private AuthorRepository authorRepository;
+  @Autowired private AuthorRepository authorRepository;
 
-  public void createAuthor(
-      final String name,
-      final String email,
-      final String description,
-      final LocalDateTime createDate,
-      final LocalDateTime updateDate
-  ) {
-    authorRepository.save(
-        AuthorEntity.builder()
-            .id(UUID.randomUUID())
-            .name(name)
-            .email(email)
-            .description(description)
-            .createDate(createDate)
-            .updateDate(updateDate)
-            .build());
+  public void createAuthor(final String name, final String email,
+                           final String description,
+                           final LocalDateTime createDate,
+                           final LocalDateTime updateDate) {
+    authorRepository.save(AuthorEntity.builder()
+                              .id(UUID.randomUUID())
+                              .name(name)
+                              .email(email)
+                              .description(description)
+                              .createDate(createDate)
+                              .updateDate(updateDate)
+                              .build());
   }
 }

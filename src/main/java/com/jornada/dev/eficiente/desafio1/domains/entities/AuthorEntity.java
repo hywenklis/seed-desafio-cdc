@@ -25,19 +25,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AuthorEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  @Id @GeneratedValue(strategy = GenerationType.UUID) private UUID id;
 
   private String name;
   private String email;
   private String description;
 
-  @Column(name = "CREATE_DATE")
-  private LocalDateTime createDate;
+  @Column(name = "CREATE_DATE") private LocalDateTime createDate;
 
-  @Column(name = "UPDATE_DATE")
-  private LocalDateTime updateDate;
+  @Column(name = "UPDATE_DATE") private LocalDateTime updateDate;
 
   @PrePersist
   public void onPrePersist() {

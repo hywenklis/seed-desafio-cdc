@@ -11,12 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public abstract class IntegrationTestAbstract {
 
-  @Autowired
-  protected MockMvc mockMvc;
+  @Autowired protected MockMvc mockMvc;
 
-  @Autowired
-  protected ObjectMapper objectMapper;
+  @Autowired protected ObjectMapper objectMapper;
 
-  @Autowired
-  protected AuthorComponent authorComponent;
+  @Autowired protected AuthorComponent authorComponent;
 }

@@ -23,27 +23,28 @@ import org.mockito.Mock;
 
 class AuthorRegistrationServiceTest extends UnitTestAbstract {
 
-  @Mock
-  private AuthorRepository authorRepository;
+  @Mock private AuthorRepository authorRepository;
 
-  @Mock
-  private AuthorDomainMapper mapper;
+  @Mock private AuthorDomainMapper mapper;
 
-  @InjectMocks
-  private AuthorRegistrationServiceImpl authorRegistrationService;
+  @InjectMocks private AuthorRegistrationServiceImpl authorRegistrationService;
 
   @Test
-  @DisplayName("Should return success when registering an author that does not exist in the database")
-  void save_author_success() {
+  @DisplayName(
+      "Should return success when registering an author that does not exist in the database")
+  void
+  save_author_success() {
     // Given
-    var authorDto = createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
+    var authorDto =
+        createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
     var authorEntity = createAuthorEntity(authorDto.name(), authorDto.email(),
-        authorDto.description());
+                                          authorDto.description());
 
     // Mock
     when(mapper.mapToEntity(authorDto)).thenReturn(authorEntity);
     when(mapper.mapToDto(authorEntity)).thenReturn(authorDto);
-    when(authorRepository.findByEmail(authorDto.email())).thenReturn(Optional.empty());
+    when(authorRepository.findByEmail(authorDto.email()))
+        .thenReturn(Optional.empty());
     when(authorRepository.save(authorEntity)).thenReturn(authorEntity);
 
     // When
@@ -63,24 +64,29 @@ class AuthorRegistrationServiceTest extends UnitTestAbstract {
   }
 
   @Test
-  @DisplayName("AuthorAlreadyExistsException must be thrown when trying to register an author that exists in the database")
-  void save_author_email_validated() {
+  @DisplayName(
+      "AuthorAlreadyExistsException must be thrown when trying to register an author that exists in the database")
+  void
+  save_author_email_validated() {
     // Given
-    var authorDto = createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
+    var authorDto =
+        createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
     var authorEntity = createAuthorEntity(authorDto.name(), authorDto.email(),
-        authorDto.description());
+                                          authorDto.description());
 
     // Mock
-    when(authorRepository.findByEmail(authorDto.email())).thenReturn(
-        Optional.ofNullable(authorEntity));
+    when(authorRepository.findByEmail(authorDto.email()))
+        .thenReturn(Optional.ofNullable(authorEntity));
 
     // When & Then
     assertThatThrownBy(() -> authorRegistrationService.save(authorDto))
         .isInstanceOf(AuthorAlreadyExistsException.class)
-        .hasMessage("Author with email " + authorDto.email() + " already exists");
+        .hasMessage("Author with email " + authorDto.email() +
+                    " already exists");
 
     // Verify
     verify(authorRepository, times(1)).findByEmail(authorDto.email());
-    verify(authorRepository, times(0)).save(Objects.requireNonNull(authorEntity));
+    verify(authorRepository, times(0))
+        .save(Objects.requireNonNull(authorEntity));
   }
 }

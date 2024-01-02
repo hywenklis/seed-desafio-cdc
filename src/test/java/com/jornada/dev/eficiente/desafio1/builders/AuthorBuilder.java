@@ -8,7 +8,8 @@ import java.util.UUID;
 
 public class AuthorBuilder {
 
-  public static AuthorRequest createAuthorRequest(String name, String email, String description) {
+  public static AuthorRequest createAuthorRequest(String name, String email,
+                                                  String description) {
     return AuthorRequest.builder()
         .name(name)
         .email(email)
@@ -16,7 +17,8 @@ public class AuthorBuilder {
         .build();
   }
 
-  public static AuthorDto createAuthorDto(String name, String email, String description) {
+  public static AuthorDto createAuthorDto(String name, String email,
+                                          String description) {
     return AuthorDto.builder()
         .name(name)
         .email(email)
@@ -26,7 +28,8 @@ public class AuthorBuilder {
         .build();
   }
 
-  public static AuthorEntity createAuthorEntity(String name, String email, String description) {
+  public static AuthorEntity createAuthorEntity(String name, String email,
+                                                String description) {
     return AuthorEntity.builder()
         .id(UUID.randomUUID())
         .name(name)
