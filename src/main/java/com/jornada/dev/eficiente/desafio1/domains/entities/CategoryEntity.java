@@ -8,10 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,26 +25,22 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id @GeneratedValue(strategy = GenerationType.UUID) private UUID id;
 
-    private String name;
+  private String name;
 
-    @Column(name = "CREATE_DATE")
-    private LocalDateTime createDate;
+  @Column(name = "CREATE_DATE") private LocalDateTime createDate;
 
-    @Column(name = "UPDATE_DATE")
-    private LocalDateTime updateDate;
+  @Column(name = "UPDATE_DATE") private LocalDateTime updateDate;
 
-    @PrePersist
-    public void onPrePersist() {
-        this.setCreateDate(LocalDateTime.now());
-        this.setUpdateDate(LocalDateTime.now());
-    }
+  @PrePersist
+  public void onPrePersist() {
+    this.setCreateDate(LocalDateTime.now());
+    this.setUpdateDate(LocalDateTime.now());
+  }
 
-    @PreUpdate
-    public void onPreUpdate() {
-        this.setUpdateDate(LocalDateTime.now());
-    }
+  @PreUpdate
+  public void onPreUpdate() {
+    this.setUpdateDate(LocalDateTime.now());
+  }
 }

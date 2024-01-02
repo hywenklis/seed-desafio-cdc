@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AuthorDomainMapper {
 
-    AuthorDto mapToDto(AuthorEntity authorEntity);
+  AuthorDto mapToDto(AuthorEntity authorEntity);
 
-    @Mapping(target = "id", ignore = true)
-    AuthorEntity mapToEntity(AuthorDto authorDto);
+  @Mapping(target = "id", ignore = true)
+  AuthorEntity mapToEntity(AuthorDto authorDto);
 }

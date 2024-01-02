@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AuthorMapperRequest {
 
-    @Mapping(target = "updateDate", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    AuthorDto mapToDto(AuthorRequest authorRequest);
+  @Mapping(target = "updateDate", ignore = true)
+  @Mapping(target = "createDate", ignore = true)
+  AuthorDto mapToDto(AuthorRequest authorRequest);
 }

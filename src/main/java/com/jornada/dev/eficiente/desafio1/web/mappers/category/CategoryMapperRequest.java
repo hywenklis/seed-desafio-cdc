@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CategoryMapperRequest {
 
-    @Mapping(target = "updateDate", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    CategoryDto mapToDto(CategoryRequest categoryRequest);
+  @Mapping(target = "updateDate", ignore = true)
+  @Mapping(target = "createDate", ignore = true)
+  CategoryDto mapToDto(CategoryRequest categoryRequest);
 }

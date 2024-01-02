@@ -20,21 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/categories")
 @RequiredArgsConstructor
-@Tag(name = "Category", description = "Endpoint related to category registration")
+@Tag(name = "Category",
+     description = "Endpoint related to category registration")
 public class CategoryController {
 
-    private final CategoryRegistrationService service;
-    private final CategoryMapperRequest mapperRequest;
-    private final CategoryMapperResponse mapperResponse;
+  private final CategoryRegistrationService service;
+  private final CategoryMapperRequest mapperRequest;
+  private final CategoryMapperResponse mapperResponse;
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(
-            summary = "Register category",
-            description = "Register categories with their appropriate information")
-    public CategoryResponse
-    registration(@RequestBody @Valid CategoryRequest categoryRequest) {
-        CategoryDto savedCategory = service.save(mapperRequest.mapToDto(categoryRequest));
-        return mapperResponse.mapToDto(savedCategory);
-    }
+  @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
+  @Operation(
+      summary = "Register category",
+      description = "Register categories with their appropriate information")
+  public CategoryResponse
+  registration(@RequestBody @Valid CategoryRequest categoryRequest) {
+    CategoryDto savedCategory =
+        service.save(mapperRequest.mapToDto(categoryRequest));
+    return mapperResponse.mapToDto(savedCategory);
+  }
 }

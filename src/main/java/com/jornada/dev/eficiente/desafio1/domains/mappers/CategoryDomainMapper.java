@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CategoryDomainMapper {
 
-    CategoryDto mapToDto(CategoryEntity categoryEntity);
+  CategoryDto mapToDto(CategoryEntity categoryEntity);
 
-    @Mapping(target = "id", ignore = true)
-    CategoryEntity mapToEntity(CategoryDto categoryDto);
+  @Mapping(target = "id", ignore = true)
+  CategoryEntity mapToEntity(CategoryDto categoryDto);
 }

@@ -17,24 +17,24 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CategoryRegistrationServiceImpl
-        implements CategoryRegistrationService {
+    implements CategoryRegistrationService {
 
-    private final CategoryRepository categoryRepository;
-    private final CategoryDomainMapper mapper;
+  private final CategoryRepository categoryRepository;
+  private final CategoryDomainMapper mapper;
 
-    @Override
-    @Transactional
-    public CategoryDto save(CategoryDto categoryDto) {
-        ensureCategoryUniqueness(categoryDto.name());
-        CategoryEntity savedCategory =
-                categoryRepository.save(mapper.mapToEntity(categoryDto));
-        return mapper.mapToDto(savedCategory);
-    }
+  @Override
+  @Transactional
+  public CategoryDto save(CategoryDto categoryDto) {
+    ensureCategoryUniqueness(categoryDto.name());
+    CategoryEntity savedCategory =
+        categoryRepository.save(mapper.mapToEntity(categoryDto));
+    return mapper.mapToDto(savedCategory);
+  }
 
-    private void ensureCategoryUniqueness(String name) {
-        categoryRepository.findByName(name).ifPresent(existingCategory -> {
-            throw new CategoryAlreadyExistsException("Category with name " + name +
-                    " already exists");
-        });
-    }
+  private void ensureCategoryUniqueness(String name) {
+    categoryRepository.findByName(name).ifPresent(existingCategory -> {
+      throw new CategoryAlreadyExistsException("Category with name " + name +
+                                               " already exists");
+    });
+  }
 }

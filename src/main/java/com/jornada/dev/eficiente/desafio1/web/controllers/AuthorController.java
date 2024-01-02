@@ -23,18 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Author", description = "Endpoint related to author registration")
 public class AuthorController {
 
-    private final AuthorRegistrationService service;
-    private final AuthorMapperRequest mapperRequest;
-    private final AuthorMapperResponse mapperResponse;
+  private final AuthorRegistrationService service;
+  private final AuthorMapperRequest mapperRequest;
+  private final AuthorMapperResponse mapperResponse;
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(
-            summary = "Register author",
-            description = "Register authors with their appropriate information")
-    public AuthorResponse
-    registration(@RequestBody @Valid AuthorRequest authorRequest) {
-        AuthorDto savedAuthor = service.save(mapperRequest.mapToDto(authorRequest));
-        return mapperResponse.mapToDto(savedAuthor);
-    }
+  @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
+  @Operation(
+      summary = "Register author",
+      description = "Register authors with their appropriate information")
+  public AuthorResponse
+  registration(@RequestBody @Valid AuthorRequest authorRequest) {
+    AuthorDto savedAuthor = service.save(mapperRequest.mapToDto(authorRequest));
+    return mapperResponse.mapToDto(savedAuthor);
+  }
 }
