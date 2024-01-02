@@ -19,21 +19,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "AUTHOR")
+@Table(name = "CATEGORY")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorEntity {
+public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String name;
-    private String email;
-    private String description;
 
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;

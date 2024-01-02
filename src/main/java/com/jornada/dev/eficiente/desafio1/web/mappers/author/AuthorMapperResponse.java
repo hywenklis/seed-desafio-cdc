@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.web.mappers;
+package com.jornada.dev.eficiente.desafio1.web.mappers.author;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
 import com.jornada.dev.eficiente.desafio1.web.responses.AuthorResponse;
@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AuthorMapperResponse {
 
-  AuthorResponse mapToDto(AuthorDto authorDto);
+    AuthorResponse mapToDto(AuthorDto authorDto);
 }

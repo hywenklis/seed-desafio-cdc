@@ -13,24 +13,24 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthorRegistrationServiceImpl
-    implements AuthorRegistrationService {
+        implements AuthorRegistrationService {
 
-  private final AuthorRepository authorRepository;
-  private final AuthorDomainMapper mapper;
+    private final AuthorRepository authorRepository;
+    private final AuthorDomainMapper mapper;
 
-  @Override
-  @Transactional
-  public AuthorDto save(AuthorDto authorDto) {
-    ensureAuthorUniqueness(authorDto.email());
-    AuthorEntity savedAuthor =
-        authorRepository.save(mapper.mapToEntity(authorDto));
-    return mapper.mapToDto(savedAuthor);
-  }
+    @Override
+    @Transactional
+    public AuthorDto save(AuthorDto authorDto) {
+        ensureAuthorUniqueness(authorDto.email());
+        AuthorEntity savedAuthor =
+                authorRepository.save(mapper.mapToEntity(authorDto));
+        return mapper.mapToDto(savedAuthor);
+    }
 
-  private void ensureAuthorUniqueness(String email) {
-    authorRepository.findByEmail(email).ifPresent(existingAuthor -> {
-      throw new AuthorAlreadyExistsException("Author with email " + email +
-                                             " already exists");
-    });
-  }
+    private void ensureAuthorUniqueness(String email) {
+        authorRepository.findByEmail(email).ifPresent(existingAuthor -> {
+            throw new AuthorAlreadyExistsException("Author with email " + email +
+                    " already exists");
+        });
+    }
 }
