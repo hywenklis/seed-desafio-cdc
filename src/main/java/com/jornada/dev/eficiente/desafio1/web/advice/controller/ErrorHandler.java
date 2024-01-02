@@ -25,7 +25,7 @@ public class ErrorHandler {
         HttpStatus.CONFLICT,
         HttpStatus.CONFLICT.value(),
         LocalDateTime.now());
-    return ResponseEntity.badRequest().body(new ErrorResponse(List.of(error)));
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(List.of(error)));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorRegistrationImpl implements AuthorRegistrationService {
+public class AuthorRegistrationServiceImpl implements AuthorRegistrationService {
 
   private final AuthorRepository authorRepository;
   private final AuthorDomainMapper mapper;
