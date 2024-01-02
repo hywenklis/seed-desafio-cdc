@@ -19,12 +19,13 @@ class AuthorControllerTest extends IntegrationTestAbstract {
   @Test
   @DisplayName("Should register a new author successfully")
   void register_new_author_success() throws Exception {
-    var request = createAuthorRequest("Hywenklis", "hywenklis@email.com", "description");
+    var request =
+        createAuthorRequest("Hywenklis", "hywenklis@email.com", "description");
 
-    mockMvc.perform(
-            post("/v1/authors/register")
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(post("/v1/authors/register")
+                     .contentType(APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.name").value(request.name()))
         .andExpect(jsonPath("$.email").value(request.email()))
@@ -32,26 +33,26 @@ class AuthorControllerTest extends IntegrationTestAbstract {
   }
 
   @Test
-  @DisplayName("Should return an exception and prevent registering an author with an existing email in the database")
-  void sucess() throws Exception {
-    var request = createAuthorRequest("Rherbert", "rherbert@email.com", "description");
+  @DisplayName(
+      "Should return an exception and prevent registering an author with an existing email in the database")
+  void
+  sucess() throws Exception {
+    var request =
+        createAuthorRequest("Rherbert", "rherbert@email.com", "description");
 
-    authorComponent.createAuthor(
-        request.name(),
-        request.email(),
-        request.description(),
-        LocalDateTime.now(),
-        LocalDateTime.now()
-    );
+    authorComponent.createAuthor(request.name(), request.email(),
+                                 request.description(), LocalDateTime.now(),
+                                 LocalDateTime.now());
 
-    mockMvc.perform(
-            post("/v1/authors/register")
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(post("/v1/authors/register")
+                     .contentType(APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isConflict())
         .andExpect(jsonPath("$.errors[0].field").value("email"))
-        .andExpect(jsonPath("$.errors[0].message").value(
-            "Author with email " + request.email() + " already exists"))
+        .andExpect(jsonPath("$.errors[0].message")
+                       .value("Author with email " + request.email() +
+                              " already exists"))
         .andExpect(jsonPath("$.errors[0].httpStatus").value("CONFLICT"))
         .andExpect(jsonPath("$.errors[0].errorCode").value(409))
         .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
@@ -61,12 +62,14 @@ class AuthorControllerTest extends IntegrationTestAbstract {
   @DisplayName("Should return BadRequest when name is blank")
   void registration_ShouldReturnBadRequest_WhenNameIsBlank() throws Exception {
     // Given
-    var request = createAuthorRequest("", "john.doe@example.com", "description");
+    var request =
+        createAuthorRequest("", "john.doe@example.com", "description");
 
     // When
-    mockMvc.perform(MockMvcRequestBuilders.post("/v1/authors/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/v1/authors/register")
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         // Then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.errors[0].field").value("name"))
@@ -80,9 +83,10 @@ class AuthorControllerTest extends IntegrationTestAbstract {
     var request = createAuthorRequest("John Doe", "", "description");
 
     // When
-    mockMvc.perform(MockMvcRequestBuilders.post("/v1/authors/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/v1/authors/register")
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         // Then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.errors[0].field").value("email"))
@@ -91,51 +95,60 @@ class AuthorControllerTest extends IntegrationTestAbstract {
 
   @Test
   @DisplayName("Should return BadRequest when invalid email format")
-  void registration_ShouldReturnBadRequest_WhenInvalidEmailFormat() throws Exception {
+  void registration_ShouldReturnBadRequest_WhenInvalidEmailFormat()
+      throws Exception {
     // Given
-    var request = createAuthorRequest("John Doe", "invalid-email-format", "description");
+    var request =
+        createAuthorRequest("John Doe", "invalid-email-format", "description");
 
     // When
-    mockMvc.perform(MockMvcRequestBuilders.post("/v1/authors/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/v1/authors/register")
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         // Then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.errors[0].field").value("email"))
-        .andExpect(jsonPath("$.errors[0].message").value("Invalid email format"));
+        .andExpect(
+            jsonPath("$.errors[0].message").value("Invalid email format"));
   }
 
   @Test
   @DisplayName("Should return BadRequest when description is blank")
-  void registration_ShouldReturnBadRequest_WhenDescriptionIsBlank() throws Exception {
+  void registration_ShouldReturnBadRequest_WhenDescriptionIsBlank()
+      throws Exception {
     // Given
     var request = createAuthorRequest("John Doe", "john.doe@example.com", "");
 
     // When
-    mockMvc.perform(MockMvcRequestBuilders.post("/v1/authors/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request)))
-        // Then
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.errors[0].field").value("description"))
-        .andExpect(jsonPath("$.errors[0].message").value("Description is required"));
-  }
-
-  @Test
-  @DisplayName("Should return BadRequest when description exceeds max length")
-  void registration_ShouldReturnBadRequest_WhenDescriptionExceedsMaxLength() throws Exception {
-    // Given
-    AuthorRequest request = createAuthorRequest("John Doe", "john.doe@example.com",
-        "a".repeat(401));
-
-    // When
-    mockMvc.perform(MockMvcRequestBuilders.post("/v1/authors/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(request)))
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/v1/authors/register")
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
         // Then
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.errors[0].field").value("description"))
         .andExpect(
-            jsonPath("$.errors[0].message").value("Description cannot exceed 400 characters"));
+            jsonPath("$.errors[0].message").value("Description is required"));
+  }
+
+  @Test
+  @DisplayName("Should return BadRequest when description exceeds max length")
+  void registration_ShouldReturnBadRequest_WhenDescriptionExceedsMaxLength()
+      throws Exception {
+    // Given
+    AuthorRequest request = createAuthorRequest(
+        "John Doe", "john.doe@example.com", "a".repeat(401));
+
+    // When
+    mockMvc
+        .perform(MockMvcRequestBuilders.post("/v1/authors/register")
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .content(objectMapper.writeValueAsString(request)))
+        // Then
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.errors[0].field").value("description"))
+        .andExpect(jsonPath("$.errors[0].message")
+                       .value("Description cannot exceed 400 characters"));
   }
 }

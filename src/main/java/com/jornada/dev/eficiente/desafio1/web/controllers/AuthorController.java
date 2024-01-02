@@ -31,11 +31,9 @@ public class AuthorController {
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(
       summary = "Register author",
-      description = "Register authors with their appropriate information"
-  )
-  public AuthorResponse registration(
-      @RequestBody @Valid AuthorRequest authorRequest
-  ) {
+      description = "Register authors with their appropriate information")
+  public AuthorResponse
+  registration(@RequestBody @Valid AuthorRequest authorRequest) {
     AuthorDto savedAuthor = service.save(mapperRequest.mapToDto(authorRequest));
     return mapperResponse.mapToDto(savedAuthor);
   }
