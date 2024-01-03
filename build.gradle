@@ -46,6 +46,7 @@ dependencies {
 }
 
 tasks.named('test') {
+	dependsOn checkstyleMain, checkstyleTest
 	useJUnitPlatform()
 	finalizedBy("jacocoTestReport")
 }
@@ -61,11 +62,14 @@ tasks.jacocoTestReport {
 checkstyle {
 	toolVersion = '10.12.7'
 	configFile = file("${rootProject.projectDir}/config/checkstyle/checkstyle.xml")
+	maxWarnings = 0
+	showViolations = true
+	ignoreFailures = false
 }
 
 tasks.withType(Checkstyle).configureEach {
 	reports {
-		xml.required = false
+		xml.required = true
 		html.required = true
 		html.stylesheet resources.text.fromFile('config/checkstyle/xsl/checkstyle-custom.xsl')
 	}

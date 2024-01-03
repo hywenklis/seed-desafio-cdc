@@ -1,5 +1,12 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
+import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
+import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.CategoryDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
@@ -9,13 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
-import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class CategoryRegistrationServiceTest extends UnitTestAbstract {
 
@@ -29,7 +29,8 @@ class CategoryRegistrationServiceTest extends UnitTestAbstract {
     private CategoryRegistrationServiceImpl categoryRegistrationService;
 
     @Test
-    @DisplayName("Should return success when registering an category that does not exist in the database")
+    @DisplayName("Should return success "
+        + "when registering an category that does not exist in the database")
     void save_category_success() {
         // Given
         var categoryDto = createCategoryDto("Categoria");

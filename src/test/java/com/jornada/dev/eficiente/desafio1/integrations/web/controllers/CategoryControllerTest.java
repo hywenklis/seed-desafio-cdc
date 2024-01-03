@@ -7,9 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.jornada.dev.eficiente.desafio1.integrations.IntegrationTestAbstract;
-
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -24,32 +22,31 @@ class CategoryControllerTest extends IntegrationTestAbstract {
         var request = createCategoryRequest("category");
 
         mockMvc
-                .perform(post("/v1/categories/register")
-                        .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value(request.name()));
+            .perform(post("/v1/categories/register")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.name").value(request.name()));
     }
 
     @Test
-    @DisplayName(
-            "Should return an exception and prevent registering an category with an existing name in the database")
+    @DisplayName("Should return an exception and prevent "
+        + "registering an category with an existing name in the database")
     void registration_ShouldReturnException_WhenExistsCategoryDuplicated() throws Exception {
-        var request =
-                createCategoryRequest("Category");
+        var request = createCategoryRequest("Category");
 
         categoryComponent.createCategory(request.name(), LocalDateTime.now(), LocalDateTime.now());
 
         mockMvc
-                .perform(post("/v1/categories/register")
-                        .contentType(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors[0].field").value("name"))
-                .andExpect(jsonPath("$.errors[0].message").value("Category name must be unique"))
-                .andExpect(jsonPath("$.errors[0].httpStatus").value("BAD_REQUEST"))
-                .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.BAD_REQUEST.value()))
-                .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
+            .perform(post("/v1/categories/register")
+                .contentType(APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.errors[0].field").value("name"))
+            .andExpect(jsonPath("$.errors[0].message").value("Category name must be unique"))
+            .andExpect(jsonPath("$.errors[0].httpStatus").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.BAD_REQUEST.value()))
+            .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
     }
 
     @Test
@@ -60,12 +57,12 @@ class CategoryControllerTest extends IntegrationTestAbstract {
 
         // When
         mockMvc
-                .perform(MockMvcRequestBuilders.post("/v1/categories/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                // Then
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors[0].field").value("name"))
-                .andExpect(jsonPath("$.errors[0].message").value("Name is required"));
+            .perform(MockMvcRequestBuilders.post("/v1/categories/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+            // Then
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.errors[0].field").value("name"))
+            .andExpect(jsonPath("$.errors[0].message").value("Name is required"));
     }
 }

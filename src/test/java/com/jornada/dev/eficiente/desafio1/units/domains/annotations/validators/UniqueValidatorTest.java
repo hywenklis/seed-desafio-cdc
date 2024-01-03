@@ -1,5 +1,13 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.annotations.validators;
 
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR_EMAIL;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.annotations.validators.UniqueValidator;
 import com.jornada.dev.eficiente.desafio1.domains.entities.AuthorEntity;
@@ -9,23 +17,14 @@ import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR_EMAIL;
-import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
 
 class UniqueValidatorTest extends UnitTestAbstract {
 

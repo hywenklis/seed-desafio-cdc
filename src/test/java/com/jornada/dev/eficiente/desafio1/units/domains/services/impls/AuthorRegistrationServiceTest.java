@@ -1,5 +1,12 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
+import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
+import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.AuthorDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
@@ -9,13 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
-import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class AuthorRegistrationServiceTest extends UnitTestAbstract {
 
