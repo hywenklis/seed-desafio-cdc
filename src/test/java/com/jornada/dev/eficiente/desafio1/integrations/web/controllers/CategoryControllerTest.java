@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -43,13 +44,11 @@ class CategoryControllerTest extends IntegrationTestAbstract {
                 .perform(post("/v1/categories/register")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isConflict())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[0].field").value("name"))
-                .andExpect(jsonPath("$.errors[0].message")
-                        .value("Category with name " + request.name() +
-                                " already exists"))
-                .andExpect(jsonPath("$.errors[0].httpStatus").value("CONFLICT"))
-                .andExpect(jsonPath("$.errors[0].errorCode").value(409))
+                .andExpect(jsonPath("$.errors[0].message").value("Category name must be unique"))
+                .andExpect(jsonPath("$.errors[0].httpStatus").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
     }
 

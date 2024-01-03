@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -50,13 +51,11 @@ class AuthorControllerTest extends IntegrationTestAbstract {
                 .perform(post("/v1/authors/register")
                         .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isConflict())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors[0].field").value("email"))
-                .andExpect(jsonPath("$.errors[0].message")
-                        .value("Author with email " + request.email() +
-                                " already exists"))
-                .andExpect(jsonPath("$.errors[0].httpStatus").value("CONFLICT"))
-                .andExpect(jsonPath("$.errors[0].errorCode").value(409))
+                .andExpect(jsonPath("$.errors[0].message").value("Email must be unique"))
+                .andExpect(jsonPath("$.errors[0].httpStatus").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.BAD_REQUEST.value()))
                 .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
     }
 
