@@ -6,9 +6,7 @@ import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -26,28 +24,17 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
 
-    @Setter
-    @Getter
-    private Function<String, Optional<?>> findByUniqueField;
-
-    @Setter
-    @Getter
     private Map<UniqueType, Function<String, Optional<?>>> repositoryMap;
+    private UniqueType type;
 
     @Override
     public void initialize(Unique constraintAnnotation) {
-        UniqueType type = constraintAnnotation.value();
+        type = constraintAnnotation.value();
 
         repositoryMap = Map.of(
                 AUTHOR_EMAIL, authorRepository::findByEmail,
                 CATEGORY_NAME, categoryRepository::findByName
         );
-
-        findByUniqueField = repositoryMap.get(type);
-
-        if (findByUniqueField == null) {
-            throw new IllegalArgumentException("Unsupported validation type: " + type);
-        }
     }
 
     @Override
@@ -56,7 +43,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
             return true;
         }
 
-        Optional<?> existingEntity = findByUniqueField.apply(value);
-        return !existingEntity.isPresent();
+        Optional<?> existingEntity = repositoryMap.get(type).apply(value);
+        return existingEntity.isEmpty();
     }
 }

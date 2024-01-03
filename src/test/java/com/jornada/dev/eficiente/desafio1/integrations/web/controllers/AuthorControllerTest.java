@@ -36,10 +36,8 @@ class AuthorControllerTest extends IntegrationTestAbstract {
     }
 
     @Test
-    @DisplayName(
-            "Should return an exception and prevent registering an author with an existing email in the database")
-    void
-    registration_ShouldReturnException_WhenExistsAuthorDuplicated() throws Exception {
+    @DisplayName("Should return an exception and prevent registering an author with an existing email in the database")
+    void registration_ShouldReturnException_WhenExistsAuthorDuplicated() throws Exception {
         var request =
                 createAuthorRequest("Rherbert", "rherbert@email.com", "description");
 
