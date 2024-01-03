@@ -6,16 +6,12 @@ import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-
-import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR_EMAIL;
-import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -32,8 +28,8 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         type = constraintAnnotation.value();
 
         repositoryMap = Map.of(
-                AUTHOR_EMAIL, authorRepository::findByEmail,
-                CATEGORY_NAME, categoryRepository::findByName
+                UniqueType.AUTHOR_EMAIL, authorRepository::findByEmail,
+                UniqueType.CATEGORY_NAME, categoryRepository::findByName
         );
     }
 

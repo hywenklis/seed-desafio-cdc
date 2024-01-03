@@ -32,8 +32,7 @@ public class CategoryController {
     @Operation(
             summary = "Register category",
             description = "Register categories with their appropriate information")
-    public CategoryResponse
-    registration(@RequestBody @Valid CategoryRequest categoryRequest) {
+    public CategoryResponse registration(@RequestBody @Valid CategoryRequest categoryRequest) {
         CategoryDto savedCategory = service.save(mapperRequest.mapToDto(categoryRequest));
         return mapperResponse.mapToDto(savedCategory);
     }
