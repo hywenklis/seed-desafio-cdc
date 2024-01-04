@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryRegistrationServiceImpl
-        implements CategoryRegistrationService {
+public class CategoryRegistrationServiceImpl implements CategoryRegistrationService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDomainMapper mapper;

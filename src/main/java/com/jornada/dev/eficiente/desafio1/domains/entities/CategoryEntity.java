@@ -14,12 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "CATEGORY")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,12 +37,12 @@ public class CategoryEntity {
 
     @PrePersist
     public void onPrePersist() {
-        this.setCreateDate(LocalDateTime.now());
-        this.setUpdateDate(LocalDateTime.now());
+        this.createDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void onPreUpdate() {
-        this.setUpdateDate(LocalDateTime.now());
+        this.updateDate = LocalDateTime.now();
     }
 }

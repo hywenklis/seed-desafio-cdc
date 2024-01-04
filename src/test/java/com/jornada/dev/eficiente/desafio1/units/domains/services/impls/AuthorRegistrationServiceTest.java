@@ -29,14 +29,14 @@ class AuthorRegistrationServiceTest extends UnitTestAbstract {
     private AuthorRegistrationServiceImpl authorRegistrationService;
 
     @Test
-    @DisplayName(
-            "Should return success when registering an author that does not exist in the database")
+    @DisplayName("Should return success when registering "
+        + "an authorEmail that does not exist in the database")
     void save_author_success() {
         // Given
         var authorDto =
-                createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
+            createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
         var authorEntity = createAuthorEntity(authorDto.name(), authorDto.email(),
-                authorDto.description());
+            authorDto.description());
 
         // Mock
         when(mapper.mapToEntity(authorDto)).thenReturn(authorEntity);

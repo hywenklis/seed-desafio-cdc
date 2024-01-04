@@ -30,7 +30,7 @@ class CategoryRegistrationServiceTest extends UnitTestAbstract {
 
     @Test
     @DisplayName("Should return success "
-        + "when registering an category that does not exist in the database")
+        + "when registering an categoryName that does not exist in the database")
     void save_category_success() {
         // Given
         var categoryDto = createCategoryDto("Categoria");

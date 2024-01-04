@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class AuthorControllerTest extends IntegrationTestAbstract {
 
     @Test
-    @DisplayName("Should register a new author successfully")
+    @DisplayName("Should register a new authorEmail successfully")
     void registration_NewAuthor_Success() throws Exception {
         var request =
             createAuthorRequest("Hywenklis", "hywenklis@email.com", "description");
@@ -35,7 +35,7 @@ class AuthorControllerTest extends IntegrationTestAbstract {
 
     @Test
     @DisplayName("Should return an exception and prevent "
-        + "registering an author with an existing email in the database")
+        + "registering an authorEmail with an existing email in the database")
     void registration_ShouldReturnException_WhenExistsAuthorDuplicated() throws Exception {
         var request =
             createAuthorRequest("Rherbert", "rherbert@email.com", "description");

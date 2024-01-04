@@ -10,6 +10,5 @@ public interface CategoryDomainMapper {
 
     CategoryDto mapToDto(CategoryEntity categoryEntity);
 
-    @Mapping(target = "id", ignore = true)
     CategoryEntity mapToEntity(CategoryDto categoryDto);
 }

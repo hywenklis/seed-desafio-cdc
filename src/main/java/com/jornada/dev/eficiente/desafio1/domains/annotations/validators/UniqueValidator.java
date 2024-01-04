@@ -1,8 +1,14 @@
 package com.jornada.dev.eficiente.desafio1.domains.annotations.validators;
 
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR_EMAIL;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_ISBN;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_TITLE;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
+
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
+import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -19,6 +25,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
+    private final BookRepository bookRepository;
 
     private Map<UniqueType, Function<String, Optional<?>>> repositoryMap;
     private UniqueType type;
@@ -28,8 +35,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         type = constraintAnnotation.value();
 
         repositoryMap = Map.of(
-                UniqueType.AUTHOR_EMAIL, authorRepository::findByEmail,
-                UniqueType.CATEGORY_NAME, categoryRepository::findByName
+            AUTHOR_EMAIL, authorRepository::findByEmail,
+            CATEGORY_NAME, categoryRepository::findByName,
+            BOOK_TITLE, bookRepository::findByTitle,
+            BOOK_ISBN, bookRepository::findByIsbn
         );
     }
 

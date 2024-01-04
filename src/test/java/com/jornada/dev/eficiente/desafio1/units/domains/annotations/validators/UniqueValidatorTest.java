@@ -1,6 +1,8 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.annotations.validators;
 
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR_EMAIL;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_ISBN;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_TITLE;
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -11,9 +13,11 @@ import static org.mockito.Mockito.when;
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.annotations.validators.UniqueValidator;
 import com.jornada.dev.eficiente.desafio1.domains.entities.AuthorEntity;
+import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
 import com.jornada.dev.eficiente.desafio1.domains.entities.CategoryEntity;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
+import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import jakarta.validation.ConstraintValidatorContext;
@@ -33,6 +37,9 @@ class UniqueValidatorTest extends UnitTestAbstract {
 
     @Mock
     private CategoryRepository categoryRepository;
+
+    @Mock
+    private BookRepository bookRepository;
 
     @Mock
     private ConstraintValidatorContext context;
@@ -82,6 +89,7 @@ class UniqueValidatorTest extends UnitTestAbstract {
         // Given
         var author = AuthorEntity.builder().email(nonUniqueValue).build();
         var category = CategoryEntity.builder().name(nonUniqueValue).build();
+        var book = BookEntity.builder().title(nonUniqueValue).isbn(nonUniqueValue).build();
 
         when(uniqueAnnotation.value()).thenReturn(type);
 
@@ -90,6 +98,10 @@ class UniqueValidatorTest extends UnitTestAbstract {
             when(authorRepository.findByEmail(nonUniqueValue)).thenReturn(Optional.of(author));
         } else if (type == CATEGORY_NAME) {
             when(categoryRepository.findByName(nonUniqueValue)).thenReturn(Optional.of(category));
+        } else if (type == BOOK_TITLE) {
+            when(bookRepository.findByTitle(nonUniqueValue)).thenReturn(Optional.of(book));
+        } else if (type == BOOK_ISBN) {
+            when(bookRepository.findByIsbn(nonUniqueValue)).thenReturn(Optional.of(book));
         }
 
         // When
@@ -105,22 +117,26 @@ class UniqueValidatorTest extends UnitTestAbstract {
 
     private static Stream<Arguments> provideNullOrEmptyValues() {
         return Stream.of(
-                Arguments.of((String) null),
-                Arguments.of("")
+            Arguments.of((String) null),
+            Arguments.of("")
         );
     }
 
     private static Stream<Arguments> provideNonUniqueValues() {
         return Stream.of(
-                Arguments.of(AUTHOR_EMAIL, "nonUniqueEmail"),
-                Arguments.of(CATEGORY_NAME, "nonUniqueCategoryName")
+            Arguments.of(AUTHOR_EMAIL, "nonUniqueEmail"),
+            Arguments.of(CATEGORY_NAME, "nonUniqueCategoryName"),
+            Arguments.of(BOOK_TITLE, "nonUniqueBookTitle"),
+            Arguments.of(BOOK_ISBN, "nonUniqueBookIsbn")
         );
     }
 
     private static Stream<Arguments> provideUniqueValues() {
         return Stream.of(
-                Arguments.of(AUTHOR_EMAIL, "uniqueEmail"),
-                Arguments.of(CATEGORY_NAME, "uniqueCategoryName")
+            Arguments.of(AUTHOR_EMAIL, "uniqueEmail"),
+            Arguments.of(CATEGORY_NAME, "uniqueCategoryName"),
+            Arguments.of(BOOK_TITLE, "uniqueBookTitle"),
+            Arguments.of(BOOK_ISBN, "uniqueBookIsbn")
         );
     }
 
@@ -128,11 +144,19 @@ class UniqueValidatorTest extends UnitTestAbstract {
         switch (type) {
             case AUTHOR_EMAIL:
                 verify(authorRepository, times(times)).findByEmail(value);
-                verifyNoInteractions(categoryRepository);
+                verifyNoInteractions(categoryRepository, bookRepository);
                 break;
             case CATEGORY_NAME:
                 verify(categoryRepository, times(times)).findByName(value);
-                verifyNoInteractions(authorRepository);
+                verifyNoInteractions(authorRepository, bookRepository);
+                break;
+            case BOOK_TITLE:
+                verify(bookRepository, times(times)).findByTitle(value);
+                verifyNoInteractions(authorRepository, categoryRepository);
+                break;
+            case BOOK_ISBN:
+                verify(bookRepository, times(times)).findByIsbn(value);
+                verifyNoInteractions(authorRepository, categoryRepository);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported validation type: " + type);

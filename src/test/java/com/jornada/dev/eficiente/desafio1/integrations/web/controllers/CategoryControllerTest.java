@@ -17,9 +17,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class CategoryControllerTest extends IntegrationTestAbstract {
 
     @Test
-    @DisplayName("Should register a new category successfully")
+    @DisplayName("Should register a new categoryName successfully")
     void register_new_category_success() throws Exception {
-        var request = createCategoryRequest("category");
+        var request = createCategoryRequest("categoryName");
 
         mockMvc
             .perform(post("/v1/categories/register")
@@ -31,7 +31,7 @@ class CategoryControllerTest extends IntegrationTestAbstract {
 
     @Test
     @DisplayName("Should return an exception and prevent "
-        + "registering an category with an existing name in the database")
+        + "registering an categoryName with an existing name in the database")
     void registration_ShouldReturnException_WhenExistsCategoryDuplicated() throws Exception {
         var request = createCategoryRequest("Category");
 
