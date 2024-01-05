@@ -2,6 +2,7 @@ package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,9 +34,14 @@ class AuthorFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return success when finding an author in the database")
     void shouldReturnAuthor_WhenFoundInDatabase() {
         // Given
-        var authorDto =
-            createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
-        var authorEntity = createAuthorEntity(authorDto.name(), authorDto.email(),
+        var authorDto = createAuthorDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10) + "@email.com",
+            randomAlphabetic(10));
+
+        var authorEntity = createAuthorEntity(
+            authorDto.name(),
+            authorDto.email(),
             authorDto.description());
 
         when(mapper.mapToDto(authorEntity)).thenReturn(authorDto);
@@ -61,8 +67,10 @@ class AuthorFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return empty when you cannot find an author in the database")
     void shouldReturnEmpty_WhenAuthorNotFoundInDatabase() {
         // Given
-        var authorDto =
-            createAuthorDto("Hywenklis", "hywenklis@email.com", "description");
+        var authorDto = createAuthorDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10) + "@email.com",
+            randomAlphabetic(10));
 
         when(authorRepository.findByEmail(authorDto.email())).thenReturn(Optional.empty());
 

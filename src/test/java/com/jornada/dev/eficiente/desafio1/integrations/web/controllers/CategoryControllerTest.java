@@ -1,6 +1,7 @@
 package com.jornada.dev.eficiente.desafio1.integrations.web.controllers;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryRequest;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -18,7 +19,7 @@ class CategoryControllerTest extends IntegrationTestAbstract {
     @Test
     @DisplayName("Should register a new categoryName successfully")
     void register_new_category_success() throws Exception {
-        var request = createCategoryRequest("categoryName");
+        var request = createCategoryRequest(randomAlphabetic(10));
 
         mockMvc
             .perform(post("/v1/categories/register")
@@ -32,7 +33,7 @@ class CategoryControllerTest extends IntegrationTestAbstract {
     @DisplayName("Should return an exception and prevent "
         + "registering an categoryName with an existing name in the database")
     void registration_ShouldReturnException_WhenExistsCategoryDuplicated() throws Exception {
-        var request = createCategoryRequest("Category");
+        var request = createCategoryRequest(randomAlphabetic(10));
 
         categoryComponent.createCategory(request.name());
 

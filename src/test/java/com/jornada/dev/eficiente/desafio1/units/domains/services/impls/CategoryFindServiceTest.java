@@ -2,6 +2,7 @@ package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,7 @@ class CategoryFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return category when found in the database")
     void shouldReturnCategoryWhenFoundInDatabase() {
         // Given
-        var categoryName = "Fiction";
+        var categoryName = randomAlphabetic(10);
         var categoryDto = createCategoryDto(categoryName);
         var categoryEntity = createCategoryEntity(categoryName);
 
@@ -58,7 +59,7 @@ class CategoryFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return empty when category not found in the database")
     void shouldReturnEmptyWhenCategoryNotFoundInDatabase() {
         // Given
-        var categoryName = "NonExistentCategory";
+        var categoryName = randomAlphabetic(10);
 
         when(categoryRepository.findByName(categoryName)).thenReturn(Optional.empty());
 

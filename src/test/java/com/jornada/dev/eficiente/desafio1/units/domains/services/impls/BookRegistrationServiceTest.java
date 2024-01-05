@@ -6,6 +6,8 @@ import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBook
 import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookEntity;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.times;
@@ -50,32 +52,44 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
     @DisplayName("Should save book successfully")
     void shouldSaveBook_Successfully() {
         // Given
-        var authorDto = createAuthorDto("John Doe", "john.doe@example.com", "Author Description");
-        var authorEntity =
-            createAuthorEntity(authorDto.name(), authorDto.email(), authorDto.description());
+        var authorDto = createAuthorDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10) + "@example.com",
+            randomAlphabetic(10));
 
-        var categoryDto = createCategoryDto("Fiction");
+        var authorEntity = createAuthorEntity(
+            authorDto.name(),
+            authorDto.email(),
+            authorDto.description());
+
+        var categoryDto = createCategoryDto(randomAlphabetic(10));
         var categoryEntity = createCategoryEntity(categoryDto.name());
+        var publicationDate = LocalDateTime.now().plusDays(1);
 
         var bookDto = createBookDto(
-            "The Great Gatsby",
-            "A classic novel",
-            "Summary of the book",
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
             BigDecimal.valueOf(20.0),
             100L,
-            "1234567890",
-            LocalDateTime.of(2022, 1, 1, 0, 0, 0),
+            randomNumeric(10),
+            LocalDateTime.of(publicationDate.getYear(),
+                publicationDate.getMonth(),
+                publicationDate.getDayOfMonth(),
+                publicationDate.getHour(),
+                publicationDate.getMinute(),
+                publicationDate.getSecond()),
             categoryDto,
             authorDto);
 
         var bookEntity = createBookEntity(
-            "The Great Gatsby",
-            "A classic novel",
-            "Summary of the book",
-            BigDecimal.valueOf(20.0),
-            100L,
-            "1234567890",
-            LocalDateTime.of(2022, 1, 1, 0, 0, 0),
+            bookDto.title(),
+            bookDto.description(),
+            bookDto.summary(),
+            bookDto.price(),
+            bookDto.numberOfPages(),
+            bookDto.isbn(),
+            bookDto.publicationDate(),
             categoryEntity,
             authorEntity);
 
@@ -122,17 +136,27 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
     @DisplayName("Should throw NotFoundException when author not found")
     void shouldThrowNotFoundExceptionWhenAuthorNotFound() {
         // Given
-        var authorDto = createAuthorDto("John Doe", "john.doe@example.com", "Author Description");
-        var categoryDto = createCategoryDto("Fiction");
+        var authorDto = createAuthorDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10) + "@example.com",
+            randomAlphabetic(10));
+
+        var categoryDto = createCategoryDto(randomAlphabetic(10));
+        var publicationDate = LocalDateTime.now().plusDays(1);
 
         var bookDto = createBookDto(
-            "The Great Gatsby",
-            "A classic novel",
-            "Summary of the book",
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
             BigDecimal.valueOf(20.0),
             100L,
-            "1234567890",
-            LocalDateTime.of(2022, 1, 1, 0, 0, 0),
+            randomNumeric(10),
+            LocalDateTime.of(publicationDate.getYear(),
+                publicationDate.getMonth(),
+                publicationDate.getDayOfMonth(),
+                publicationDate.getHour(),
+                publicationDate.getMinute(),
+                publicationDate.getSecond()),
             categoryDto,
             authorDto);
 
@@ -157,17 +181,27 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
     @DisplayName("Should throw NotFoundException when category not found")
     void shouldThrowNotFoundExceptionWhenCategoryNotFound() {
         // Given
-        var authorDto = createAuthorDto("John Doe", "john.doe@example.com", "Author Description");
-        var categoryDto = createCategoryDto("Fiction");
+        var authorDto = createAuthorDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10) + "@example.com",
+            randomAlphabetic(10));
+
+        var categoryDto = createCategoryDto(randomAlphabetic(10));
+        var publicationDate = LocalDateTime.now().plusDays(1);
 
         var bookDto = createBookDto(
-            "The Great Gatsby",
-            "A classic novel",
-            "Summary of the book",
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
             BigDecimal.valueOf(20.0),
             100L,
-            "1234567890",
-            LocalDateTime.of(2022, 1, 1, 0, 0, 0),
+            randomNumeric(10),
+            LocalDateTime.of(publicationDate.getYear(),
+                publicationDate.getMonth(),
+                publicationDate.getDayOfMonth(),
+                publicationDate.getHour(),
+                publicationDate.getMinute(),
+                publicationDate.getSecond()),
             categoryDto,
             authorDto);
 

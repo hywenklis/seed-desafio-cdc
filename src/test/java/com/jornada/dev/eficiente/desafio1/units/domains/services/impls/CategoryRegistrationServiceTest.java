@@ -2,6 +2,7 @@ package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,7 @@ class CategoryRegistrationServiceTest extends UnitTestAbstract {
         + "when registering an categoryName that does not exist in the database")
     void save_category_success() {
         // Given
-        var categoryDto = createCategoryDto("Categoria");
+        var categoryDto = createCategoryDto(randomAlphabetic(10));
         var categoryEntity = createCategoryEntity(categoryDto.name());
 
         // Mock

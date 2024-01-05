@@ -1,5 +1,7 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +14,7 @@ import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.impls.BookFindServiceImpls;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.Optional;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +35,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return book when found in the database by title")
     void shouldReturnBook_WhenFoundInDatabaseByTitle() {
         // Given
-        var bookTitle = "The Great Gatsby";
+        var bookTitle = randomAlphabetic(10);
         var bookDto = BookDto.builder().title(bookTitle).build();
         var bookEntity = BookEntity.builder().title(bookTitle).build();
 
@@ -55,7 +58,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return empty when book not found in the database by title")
     void shouldReturnEmpty_WhenBookNotFoundInDatabaseByTitle() {
         // Given
-        var bookTitle = "NonExistentBook";
+        var bookTitle = randomAlphabetic(10);
 
         // Mock
         when(bookRepository.findByTitle(bookTitle)).thenReturn(Optional.empty());
@@ -74,7 +77,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return book when found in the database by ISBN")
     void shouldReturnBook_WhenFoundInDatabaseByIsbn() {
         // Given
-        var bookIsbn = "978-3-16-148410-0";
+        var bookIsbn = randomNumeric(10);
         var bookDto = BookDto.builder().isbn(bookIsbn).build();
         var bookEntity = BookEntity.builder().isbn(bookIsbn).build();
 
@@ -97,7 +100,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return empty when book not found in the database by ISBN")
     void shouldReturnEmpty_WhenBookNotFoundInDatabaseByIsbn() {
         // Given
-        var bookIsbn = "NonExistentISBN";
+        var bookIsbn = RandomStringUtils.randomNumeric(10);
 
         // Mock
         when(bookRepository.findByIsbn(bookIsbn)).thenReturn(Optional.empty());
