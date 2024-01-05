@@ -5,9 +5,10 @@ import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_T
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
-import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record BookRequest(@NotBlank(message = "Name is required")
+public record BookRequest(@NotBlank(message = "Title is required")
                           @Unique(value = BOOK_TITLE, message = "Title must be unique")
                           String title,
 
@@ -28,11 +29,11 @@ public record BookRequest(@NotBlank(message = "Name is required")
                           String summary,
 
                           @NotNull(message = "Price is required")
-                          @DecimalMax(value = "20", message = "Price cannot exceed 20")
+                          @DecimalMin(value = "20", message = "Price must be at least 20")
                           BigDecimal price,
 
                           @NotNull(message = "Number of pages is required")
-                          @Max(value = 100, message = "Number of pages must be at least 100")
+                          @Min(value = 100, message = "Number of pages must be at least 100")
                           Long numberOfPages,
 
                           @NotBlank(message = "ISBN is required")
@@ -49,5 +50,6 @@ public record BookRequest(@NotBlank(message = "Name is required")
 
                           @NotNull(message = "Author is required")
                           @NotBlank(message = "Author is required")
+                          @Email(message = "Invalid email format")
                           String authorEmail) {
 }

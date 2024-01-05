@@ -39,10 +39,9 @@ public class BookRegistrationServiceImpl implements BookRegistrationService {
                 "Category not found with name: " + bookDto.category().name()
             ));
 
-        bookDto.update(author);
-        bookDto.update(category);
+        var book = bookDto.update(author, category);
 
-        BookEntity savedBook = bookRepository.save(bookMapper.mapToEntity(bookDto));
+        BookEntity savedBook = bookRepository.save(bookMapper.mapToEntity(book));
         return bookMapper.mapToDto(savedBook);
     }
 }

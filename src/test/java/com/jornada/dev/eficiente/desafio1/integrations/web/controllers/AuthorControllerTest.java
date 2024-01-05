@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.jornada.dev.eficiente.desafio1.integrations.IntegrationTestAbstract;
 import com.jornada.dev.eficiente.desafio1.web.requests.AuthorRequest;
-import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -40,9 +39,7 @@ class AuthorControllerTest extends IntegrationTestAbstract {
         var request =
             createAuthorRequest("Rherbert", "rherbert@email.com", "description");
 
-        authorComponent.createAuthor(request.name(), request.email(),
-            request.description(), LocalDateTime.now(),
-            LocalDateTime.now());
+        authorComponent.createAuthor(request.name(), request.email(), request.description());
 
         mockMvc
             .perform(post("/v1/authors/register")

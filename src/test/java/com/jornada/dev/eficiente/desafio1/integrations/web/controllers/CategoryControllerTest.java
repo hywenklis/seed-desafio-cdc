@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.jornada.dev.eficiente.desafio1.integrations.IntegrationTestAbstract;
-import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ class CategoryControllerTest extends IntegrationTestAbstract {
     void registration_ShouldReturnException_WhenExistsCategoryDuplicated() throws Exception {
         var request = createCategoryRequest("Category");
 
-        categoryComponent.createCategory(request.name(), LocalDateTime.now(), LocalDateTime.now());
+        categoryComponent.createCategory(request.name());
 
         mockMvc
             .perform(post("/v1/categories/register")

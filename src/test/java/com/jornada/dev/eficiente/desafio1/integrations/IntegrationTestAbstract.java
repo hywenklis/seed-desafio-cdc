@@ -2,6 +2,7 @@ package com.jornada.dev.eficiente.desafio1.integrations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jornada.dev.eficiente.desafio1.components.AuthorComponent;
+import com.jornada.dev.eficiente.desafio1.components.BookComponent;
 import com.jornada.dev.eficiente.desafio1.components.CategoryComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,4 +24,7 @@ public abstract class IntegrationTestAbstract {
 
     @Autowired
     protected CategoryComponent categoryComponent;
+
+    @Autowired
+    protected BookComponent bookComponent;
 }

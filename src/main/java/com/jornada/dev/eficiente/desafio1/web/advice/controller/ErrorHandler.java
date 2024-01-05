@@ -24,7 +24,7 @@ public class ErrorHandler {
             HttpStatus.NOT_FOUND,
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now());
-        return ResponseEntity.badRequest().body(new ErrorResponse(List.of(error)));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(List.of(error)));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

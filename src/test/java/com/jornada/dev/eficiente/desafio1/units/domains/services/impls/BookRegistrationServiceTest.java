@@ -92,7 +92,23 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
         BookDto savedBook = bookRegistrationServiceImpl.save(bookDto);
 
         // Then
-        assertThat(savedBook).isEqualTo(bookDto);
+        assertThat(savedBook.title()).isEqualTo(bookDto.title());
+        assertThat(savedBook.description()).isEqualTo(bookDto.description());
+        assertThat(savedBook.summary()).isEqualTo(bookDto.summary());
+        assertThat(savedBook.price()).isEqualTo(bookDto.price());
+        assertThat(savedBook.numberOfPages()).isEqualTo(bookDto.numberOfPages());
+        assertThat(savedBook.isbn()).isEqualTo(bookDto.isbn());
+        assertThat(savedBook.publicationDate()).isEqualTo(bookDto.publicationDate());
+        assertThat(savedBook.category().id()).isEqualTo(bookDto.category().id());
+        assertThat(savedBook.category().name()).isEqualTo(bookDto.category().name());
+        assertThat(savedBook.category().createDate()).isEqualTo(bookDto.category().createDate());
+        assertThat(savedBook.category().updateDate()).isEqualTo(bookDto.category().updateDate());
+        assertThat(savedBook.author().id()).isEqualTo(bookDto.author().id());
+        assertThat(savedBook.author().name()).isEqualTo(bookDto.author().name());
+        assertThat(savedBook.author().email()).isEqualTo(bookDto.author().email());
+        assertThat(savedBook.author().description()).isEqualTo(bookDto.author().description());
+        assertThat(savedBook.author().createDate()).isEqualTo(bookDto.author().createDate());
+        assertThat(savedBook.author().updateDate()).isEqualTo(bookDto.author().updateDate());
 
         // Verify
         verify(authorFindService, times(1)).findAuthorByEmail(authorDto.email());
