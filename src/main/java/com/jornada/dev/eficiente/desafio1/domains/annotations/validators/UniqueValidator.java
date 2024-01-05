@@ -7,9 +7,9 @@ import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGO
 
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
+import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.BookFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.CategoryFindService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Map;
@@ -23,9 +23,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
-    private final AuthorRepository authorRepository;
-    private final CategoryRepository categoryRepository;
-    private final BookRepository bookRepository;
+    private final AuthorFindService authorFindService;
+    private final CategoryFindService categoryFindService;
+    private final BookFindService bookFindService;
 
     private Map<UniqueType, Function<String, Optional<?>>> repositoryMap;
     private UniqueType type;
@@ -35,10 +35,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         type = constraintAnnotation.value();
 
         repositoryMap = Map.of(
-            AUTHOR_EMAIL, authorRepository::findByEmail,
-            CATEGORY_NAME, categoryRepository::findByName,
-            BOOK_TITLE, bookRepository::findByTitle,
-            BOOK_ISBN, bookRepository::findByIsbn
+            AUTHOR_EMAIL, authorFindService::findAuthorByEmail,
+            CATEGORY_NAME, categoryFindService::findCategoryByName,
+            BOOK_TITLE, bookFindService::findBookByTitle,
+            BOOK_ISBN, bookFindService::findBookByIsbn
         );
     }
 

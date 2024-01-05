@@ -12,13 +12,13 @@ import static org.mockito.Mockito.when;
 
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.annotations.validators.UniqueValidator;
-import com.jornada.dev.eficiente.desafio1.domains.entities.AuthorEntity;
-import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
-import com.jornada.dev.eficiente.desafio1.domains.entities.CategoryEntity;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
+import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.BookFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.CategoryFindService;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Optional;
@@ -33,13 +33,13 @@ import org.mockito.Mock;
 class UniqueValidatorTest extends UnitTestAbstract {
 
     @Mock
-    private AuthorRepository authorRepository;
+    private AuthorFindService authorFindService;
 
     @Mock
-    private CategoryRepository categoryRepository;
+    private CategoryFindService categoryFindService;
 
     @Mock
-    private BookRepository bookRepository;
+    private BookFindService bookFindService;
 
     @Mock
     private ConstraintValidatorContext context;
@@ -61,7 +61,7 @@ class UniqueValidatorTest extends UnitTestAbstract {
         assertThat(result).isTrue();
 
         // Verify that repository methods are not called
-        verifyNoInteractions(authorRepository, categoryRepository);
+        verifyNoInteractions(authorFindService, categoryFindService);
     }
 
     @DisplayName("isValid should return true when value is unique in the repository")
@@ -87,22 +87,14 @@ class UniqueValidatorTest extends UnitTestAbstract {
     @MethodSource("provideNonUniqueValues")
     void isValid_ShouldReturnFalse_WhenValueIsNotUnique(UniqueType type, String nonUniqueValue) {
         // Given
-        var author = AuthorEntity.builder().email(nonUniqueValue).build();
-        var category = CategoryEntity.builder().name(nonUniqueValue).build();
-        var book = BookEntity.builder().title(nonUniqueValue).isbn(nonUniqueValue).build();
+        var author = AuthorDto.builder().email(nonUniqueValue).build();
+        var category = CategoryDto.builder().name(nonUniqueValue).build();
+        var book = BookDto.builder().title(nonUniqueValue).isbn(nonUniqueValue).build();
 
         when(uniqueAnnotation.value()).thenReturn(type);
 
         // Mock repository responses based on type
-        if (type == AUTHOR_EMAIL) {
-            when(authorRepository.findByEmail(nonUniqueValue)).thenReturn(Optional.of(author));
-        } else if (type == CATEGORY_NAME) {
-            when(categoryRepository.findByName(nonUniqueValue)).thenReturn(Optional.of(category));
-        } else if (type == BOOK_TITLE) {
-            when(bookRepository.findByTitle(nonUniqueValue)).thenReturn(Optional.of(book));
-        } else if (type == BOOK_ISBN) {
-            when(bookRepository.findByIsbn(nonUniqueValue)).thenReturn(Optional.of(book));
-        }
+        mockRepositoryByType(type, nonUniqueValue, author, category, book);
 
         // When
         uniqueValidator.initialize(uniqueAnnotation);
@@ -140,23 +132,41 @@ class UniqueValidatorTest extends UnitTestAbstract {
         );
     }
 
+    private void mockRepositoryByType(UniqueType type,
+                                      String nonUniqueValue,
+                                      AuthorDto author,
+                                      CategoryDto category,
+                                      BookDto book) {
+        if (type == AUTHOR_EMAIL) {
+            when(authorFindService.findAuthorByEmail(nonUniqueValue)).thenReturn(
+                Optional.of(author));
+        } else if (type == CATEGORY_NAME) {
+            when(categoryFindService.findCategoryByName(nonUniqueValue)).thenReturn(
+                Optional.of(category));
+        } else if (type == BOOK_TITLE) {
+            when(bookFindService.findBookByTitle(nonUniqueValue)).thenReturn(Optional.of(book));
+        } else if (type == BOOK_ISBN) {
+            when(bookFindService.findBookByIsbn(nonUniqueValue)).thenReturn(Optional.of(book));
+        }
+    }
+
     private void verifyRepositoryMethodInvocation(UniqueType type, String value, int times) {
         switch (type) {
             case AUTHOR_EMAIL:
-                verify(authorRepository, times(times)).findByEmail(value);
-                verifyNoInteractions(categoryRepository, bookRepository);
+                verify(authorFindService, times(times)).findAuthorByEmail(value);
+                verifyNoInteractions(categoryFindService, bookFindService);
                 break;
             case CATEGORY_NAME:
-                verify(categoryRepository, times(times)).findByName(value);
-                verifyNoInteractions(authorRepository, bookRepository);
+                verify(categoryFindService, times(times)).findCategoryByName(value);
+                verifyNoInteractions(authorFindService, bookFindService);
                 break;
             case BOOK_TITLE:
-                verify(bookRepository, times(times)).findByTitle(value);
-                verifyNoInteractions(authorRepository, categoryRepository);
+                verify(bookFindService, times(times)).findBookByTitle(value);
+                verifyNoInteractions(authorFindService, categoryFindService);
                 break;
             case BOOK_ISBN:
-                verify(bookRepository, times(times)).findByIsbn(value);
-                verifyNoInteractions(authorRepository, categoryRepository);
+                verify(bookFindService, times(times)).findBookByIsbn(value);
+                verifyNoInteractions(authorFindService, categoryFindService);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported validation type: " + type);
