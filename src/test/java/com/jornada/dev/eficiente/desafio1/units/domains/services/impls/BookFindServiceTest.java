@@ -1,5 +1,6 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
+import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,8 +14,8 @@ import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.impls.BookFindServiceImpls;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
+import java.util.List;
 import java.util.Optional;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -100,7 +101,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     @DisplayName("Should return empty when book not found in the database by ISBN")
     void shouldReturnEmpty_WhenBookNotFoundInDatabaseByIsbn() {
         // Given
-        var bookIsbn = RandomStringUtils.randomNumeric(10);
+        var bookIsbn = randomNumeric(10);
 
         // Mock
         when(bookRepository.findByIsbn(bookIsbn)).thenReturn(Optional.empty());
@@ -113,5 +114,45 @@ class BookFindServiceTest extends UnitTestAbstract {
 
         // Verify
         verify(bookRepository, times(1)).findByIsbn(bookIsbn);
+    }
+
+    @Test
+    @DisplayName("Should return all books when found in the database")
+    void shouldReturnAllBooks_WhenFoundInDatabase() {
+        // Given
+        var bookDto = BookDto.builder().id(randomUUID()).title(randomAlphabetic(10)).build();
+        var bookEntity = BookEntity.builder().id(bookDto.id()).title(bookDto.title()).build();
+
+        // Mock
+        when(bookRepository.findAll()).thenReturn(List.of(bookEntity));
+
+        // When
+        when(bookMapper.mapToDto(bookEntity)).thenReturn(bookDto);
+        Optional<List<BookDto>> book = bookFindServiceImpls.findAll();
+
+        // Then
+        assertThat(book).isPresent();
+        assertThat(book.get().stream().toList().getFirst().id()).isEqualTo(bookDto.id());
+        assertThat(book.get().stream().toList().getFirst().title()).isEqualTo(bookDto.title());
+
+        // Verify
+        verify(bookRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Should return list empty when not found in the database")
+    void shouldReturnListEmpty_WhenNotFoundInDatabase() {
+        // Mock
+        when(bookRepository.findAll()).thenReturn(List.of());
+
+        var book = bookFindServiceImpls.findAll();
+
+        // Then
+        assertThat(book)
+            .isPresent()
+            .isEqualTo(Optional.of(List.of()));
+
+        // Verify
+        verify(bookRepository, times(1)).findAll();
     }
 }

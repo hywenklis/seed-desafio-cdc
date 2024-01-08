@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryComponent {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+
+    public CategoryComponent(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     public CategoryEntity createCategory(final String name) {
         return categoryRepository.save(createCategoryEntity(name));

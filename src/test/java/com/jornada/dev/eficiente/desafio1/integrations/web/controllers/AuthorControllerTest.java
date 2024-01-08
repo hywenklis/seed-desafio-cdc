@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+@DisplayName("POST /v1/authors/register")
 class AuthorControllerTest extends IntegrationTestAbstract {
 
     @Test

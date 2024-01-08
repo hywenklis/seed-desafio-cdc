@@ -7,14 +7,15 @@ import com.jornada.dev.eficiente.desafio1.domains.entities.CategoryEntity;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookComponent {
+    private final BookRepository bookRepository;
 
-    @Autowired
-    private BookRepository bookRepository;
+    public BookComponent(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public BookEntity createBook(String title,
                                  String description,

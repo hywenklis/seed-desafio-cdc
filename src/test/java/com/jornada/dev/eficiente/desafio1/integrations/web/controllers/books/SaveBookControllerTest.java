@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.integrations.web.controllers;
+package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.books;
 
 import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -20,7 +20,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpStatus;
 
-class BookControllerTest extends IntegrationTestAbstract {
+@DisplayName("POST /v1/books/register")
+class SaveBookControllerTest extends IntegrationTestAbstract {
 
     @Test
     @DisplayName("Should register a new book successfully")
@@ -109,26 +110,7 @@ class BookControllerTest extends IntegrationTestAbstract {
     @Test
     @DisplayName("Should return 400 Bad Request when title is not unique")
     void registration_NonUniqueTitle_BadRequest() throws Exception {
-        var author = authorComponent.createAuthor(
-            randomAlphabetic(10),
-            randomAlphabetic(10) + "@example.com",
-            randomAlphabetic(10));
-
-        var category = categoryComponent.createCategory(randomAlphabetic(10));
-
-        var publicationDate = LocalDateTime.now().plusDays(1);
-
-        var book = bookComponent.createBook(
-            randomAlphabetic(10),
-            randomAlphabetic(10),
-            randomAlphabetic(10),
-            BigDecimal.valueOf(20.0),
-            100L,
-            randomNumeric(10),
-            publicationDate,
-            category,
-            author
-        );
+        var book = dataInitializerComponent.initializeBookData();
 
         var request = createBookRequest(
             book.getTitle(),
@@ -137,9 +119,9 @@ class BookControllerTest extends IntegrationTestAbstract {
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
-            publicationDate,
-            category.getName(),
-            author.getEmail()
+            book.getPublicationDate(),
+            book.getCategory().getName(),
+            book.getAuthor().getEmail()
         );
 
         mockMvc.perform(post("/v1/books/register")
@@ -156,26 +138,7 @@ class BookControllerTest extends IntegrationTestAbstract {
     @Test
     @DisplayName("Should return 400 Bad Request when ISBN is not unique")
     void registration_NonUniqueIsbn_BadRequest() throws Exception {
-        var author = authorComponent.createAuthor(
-            randomAlphabetic(10),
-            randomAlphabetic(10) + "@example.com",
-            randomAlphabetic(10));
-
-        var category = categoryComponent.createCategory(randomAlphabetic(10));
-
-        var publicationDate = LocalDateTime.now().plusDays(1);
-
-        var book = bookComponent.createBook(
-            randomAlphabetic(10),
-            randomAlphabetic(10),
-            randomAlphabetic(10),
-            BigDecimal.valueOf(20.0),
-            100L,
-            randomNumeric(10),
-            publicationDate,
-            category,
-            author
-        );
+        var book = dataInitializerComponent.initializeBookData();
 
         var request = createBookRequest(
             randomAlphabetic(10),
@@ -184,9 +147,9 @@ class BookControllerTest extends IntegrationTestAbstract {
             BigDecimal.valueOf(20.0),
             100L,
             book.getIsbn(),
-            publicationDate,
-            category.getName(),
-            author.getEmail()
+            book.getPublicationDate(),
+            book.getCategory().getName(),
+            book.getAuthor().getEmail()
         );
 
         mockMvc.perform(post("/v1/books/register")

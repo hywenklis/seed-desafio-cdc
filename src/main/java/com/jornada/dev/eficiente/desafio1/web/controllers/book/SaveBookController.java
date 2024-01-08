@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.web.controllers;
+package com.jornada.dev.eficiente.desafio1.web.controllers.book;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookRegistrationService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/books")
 @RequiredArgsConstructor
 @Tag(name = "Book", description = "Endpoint related to book registration")
-public class BookController {
+public class SaveBookController {
 
     private final BookRegistrationService service;
     private final BookMapperRequest mapperRequest;

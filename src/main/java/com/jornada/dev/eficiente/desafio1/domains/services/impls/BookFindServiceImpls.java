@@ -4,6 +4,7 @@ import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookFindService;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,10 @@ public class BookFindServiceImpls implements BookFindService {
     @Override
     public Optional<BookDto> findBookByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn).map(bookMapper::mapToDto);
+    }
+
+    @Override
+    public Optional<List<BookDto>> findAll() {
+        return Optional.of(bookRepository.findAll().stream().map(bookMapper::mapToDto).toList());
     }
 }

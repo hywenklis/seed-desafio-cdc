@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorComponent {
 
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
+
+    public AuthorComponent(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     public AuthorEntity createAuthor(final String name,
                                      final String email,
