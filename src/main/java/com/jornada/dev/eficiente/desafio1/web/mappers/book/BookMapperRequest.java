@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface BookMapperRequest {
 
+    @Mapping(target = "bookDetails", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "createDate", ignore = true)

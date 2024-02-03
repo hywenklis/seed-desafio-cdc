@@ -2,8 +2,10 @@ package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
 
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;
+import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookDetailsDto;
 import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookDto;
 import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookEntity;
+import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createSocialMediaDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -65,12 +67,28 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
         var categoryDto = createCategoryDto(randomAlphabetic(10));
         var categoryEntity = createCategoryEntity(categoryDto.name());
         var publicationDate = LocalDateTime.now().plusDays(1);
+        var bigDecimal = BigDecimal.valueOf(20.0);
+
+        var socialMediaDto = createSocialMediaDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10)
+        );
+
+        var bookDetailsDto = createBookDetailsDto(
+            randomAlphabetic(10),
+            bigDecimal.add(bigDecimal),
+            socialMediaDto
+        );
 
         var bookDto = createBookDto(
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
-            BigDecimal.valueOf(20.0),
+            randomAlphabetic(10),
+            bigDecimal,
+            bigDecimal,
             100L,
             randomNumeric(10),
             LocalDateTime.of(publicationDate.getYear(),
@@ -80,13 +98,16 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
                 publicationDate.getMinute(),
                 publicationDate.getSecond()),
             categoryDto,
-            authorDto);
+            authorDto,
+            bookDetailsDto);
 
         var bookEntity = createBookEntity(
             bookDto.title(),
+            bookDto.subtitle(),
             bookDto.description(),
             bookDto.summary(),
-            bookDto.price(),
+            bookDto.ebookPrice(),
+            bookDto.printedBookPrice(),
             bookDto.numberOfPages(),
             bookDto.isbn(),
             bookDto.publicationDate(),
@@ -109,7 +130,7 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
         assertThat(savedBook.title()).isEqualTo(bookDto.title());
         assertThat(savedBook.description()).isEqualTo(bookDto.description());
         assertThat(savedBook.summary()).isEqualTo(bookDto.summary());
-        assertThat(savedBook.price()).isEqualTo(bookDto.price());
+        assertThat(savedBook.ebookPrice()).isEqualTo(bookDto.ebookPrice());
         assertThat(savedBook.numberOfPages()).isEqualTo(bookDto.numberOfPages());
         assertThat(savedBook.isbn()).isEqualTo(bookDto.isbn());
         assertThat(savedBook.publicationDate()).isEqualTo(bookDto.publicationDate());
@@ -143,12 +164,28 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
 
         var categoryDto = createCategoryDto(randomAlphabetic(10));
         var publicationDate = LocalDateTime.now().plusDays(1);
+        var bigDecimal = BigDecimal.valueOf(20.0);
+
+        var socialMediaDto = createSocialMediaDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10)
+        );
+
+        var bookDetailsDto = createBookDetailsDto(
+            randomAlphabetic(10),
+            bigDecimal.add(bigDecimal),
+            socialMediaDto
+        );
 
         var bookDto = createBookDto(
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
-            BigDecimal.valueOf(20.0),
+            randomAlphabetic(10),
+            bigDecimal,
+            bigDecimal,
             100L,
             randomNumeric(10),
             LocalDateTime.of(publicationDate.getYear(),
@@ -158,7 +195,8 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
                 publicationDate.getMinute(),
                 publicationDate.getSecond()),
             categoryDto,
-            authorDto);
+            authorDto,
+            bookDetailsDto);
 
         // Mock
         when(authorFindService.findAuthorByEmail(bookDto.author().email()))
@@ -188,12 +226,28 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
 
         var categoryDto = createCategoryDto(randomAlphabetic(10));
         var publicationDate = LocalDateTime.now().plusDays(1);
+        var bigDecimal = BigDecimal.valueOf(20.0);
+
+        var socialMediaDto = createSocialMediaDto(
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10),
+            randomAlphabetic(10)
+        );
+
+        var bookDetailsDto = createBookDetailsDto(
+            randomAlphabetic(10),
+            bigDecimal.add(bigDecimal),
+            socialMediaDto
+        );
 
         var bookDto = createBookDto(
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
-            BigDecimal.valueOf(20.0),
+            randomAlphabetic(10),
+            bigDecimal,
+            bigDecimal,
             100L,
             randomNumeric(10),
             LocalDateTime.of(publicationDate.getYear(),
@@ -203,7 +257,8 @@ class BookRegistrationServiceTest extends UnitTestAbstract {
                 publicationDate.getMinute(),
                 publicationDate.getSecond()),
             categoryDto,
-            authorDto);
+            authorDto,
+            bookDetailsDto);
 
         // Mock
         when(authorFindService.findAuthorByEmail(authorDto.email())).thenReturn(

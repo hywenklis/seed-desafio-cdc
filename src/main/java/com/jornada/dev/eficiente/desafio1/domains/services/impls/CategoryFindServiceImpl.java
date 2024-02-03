@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryFindServiceImpls implements CategoryFindService {
+public class CategoryFindServiceImpl implements CategoryFindService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDomainMapper categoryMapper;

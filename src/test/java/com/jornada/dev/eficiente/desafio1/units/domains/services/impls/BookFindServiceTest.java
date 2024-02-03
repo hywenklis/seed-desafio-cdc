@@ -12,7 +12,7 @@ import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.BookFindServiceImpls;
+import com.jornada.dev.eficiente.desafio1.domains.services.impls.BookFindServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +30,7 @@ class BookFindServiceTest extends UnitTestAbstract {
     private BookDomainMapper bookMapper;
 
     @InjectMocks
-    private BookFindServiceImpls bookFindServiceImpls;
+    private BookFindServiceImpl bookFindServiceImpls;
 
     @Test
     @DisplayName("Should return book when found in the database by title")

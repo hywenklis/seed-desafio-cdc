@@ -41,6 +41,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -61,7 +63,7 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.title").value(request.title()))
             .andExpect(jsonPath("$.description").value(request.description()))
-            .andExpect(jsonPath("$.price").value(request.price()))
+            .andExpect(jsonPath("$.ebookPrice").value(request.ebookPrice()))
             .andExpect(jsonPath("$.numberOfPages").value(request.numberOfPages()))
             .andExpect(jsonPath("$.isbn").value(request.isbn()))
             .andExpect(
@@ -83,6 +85,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             value,
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -116,6 +120,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             book.getTitle(),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -144,6 +150,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             book.getIsbn(),
@@ -171,7 +179,9 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
         var request = createBookRequest(
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
             value,
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -197,13 +207,15 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
     }
 
     @Test
-    @DisplayName("Should return 400 Bad Request when price is less than 20")
+    @DisplayName("Should return 400 Bad Request when ebookPrice is less than 20")
     void registration_PriceLessThanMinimum_BadRequest() throws Exception {
         var publicationDate = LocalDateTime.now().plusDays(1);
         var request = createBookRequest(
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(19.99), // less than 20
             BigDecimal.valueOf(19.99), // less than 20
             100L,
             randomNumeric(10),
@@ -221,7 +233,7 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors[0].field").value("price"))
+            .andExpect(jsonPath("$.errors[0].field").value("ebookPrice"))
             .andExpect(jsonPath("$.errors[0].message").value("Price must be at least 20"))
             .andExpect(jsonPath("$.errors[0].httpStatus").value("BAD_REQUEST"))
             .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.BAD_REQUEST.value()))
@@ -236,6 +248,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             99L, // less than 100
             randomNumeric(10),
@@ -269,6 +283,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(501),
             randomAlphabetic(501),
+            randomAlphabetic(501),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -303,6 +319,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -338,6 +356,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -373,6 +393,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),
@@ -407,6 +429,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),

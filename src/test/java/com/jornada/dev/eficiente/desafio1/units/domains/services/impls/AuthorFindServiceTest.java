@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.AuthorDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.AuthorFindServiceImpls;
+import com.jornada.dev.eficiente.desafio1.domains.services.impls.AuthorFindServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ class AuthorFindServiceTest extends UnitTestAbstract {
     private AuthorDomainMapper mapper;
 
     @InjectMocks
-    private AuthorFindServiceImpls authorFindServiceImpls;
+    private AuthorFindServiceImpl authorFindServiceImpls;
 
     @Test
     @DisplayName("Should return success when finding an author in the database")

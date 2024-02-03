@@ -6,6 +6,7 @@ import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
 import com.jornada.dev.eficiente.desafio1.domains.exceptions.NotFoundException;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.properties.SocialMediaProperty;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookRegistrationService;
@@ -22,26 +23,36 @@ public class BookRegistrationServiceImpl implements BookRegistrationService {
     private final BookDomainMapper bookMapper;
     private final AuthorFindService authorFindService;
     private final CategoryFindService categoryFindService;
+    private final SocialMediaProperty socialMediaProperty;
 
     @Override
     @Transactional
     public BookDto save(BookDto bookDto) {
+        AuthorDto author = findAuthor(bookDto);
+        CategoryDto category = findCategory(bookDto);
+        BookEntity bookEntity = createBookEntity(bookDto, author, category);
+        BookEntity savedBook = bookRepository.save(bookEntity);
 
-        AuthorDto author = authorFindService.findAuthorByEmail(bookDto.author().email())
-            .orElseThrow(() -> new NotFoundException(
-                "authorEmail",
-                "Author not found with email: " + bookDto.author().email()
-            ));
+        return bookMapper.mapToDto(savedBook);
+    }
 
-        CategoryDto category = categoryFindService.findCategoryByName(bookDto.category().name())
+    private CategoryDto findCategory(BookDto bookDto) {
+        return categoryFindService.findCategoryByName(bookDto.category().name())
             .orElseThrow(() -> new NotFoundException(
                 "categoryName",
                 "Category not found with name: " + bookDto.category().name()
             ));
+    }
 
-        var book = bookDto.update(author, category);
+    private AuthorDto findAuthor(BookDto bookDto) {
+        return authorFindService.findAuthorByEmail(bookDto.author().email())
+            .orElseThrow(() -> new NotFoundException(
+                "authorEmail",
+                "Author not found with email: " + bookDto.author().email()
+            ));
+    }
 
-        BookEntity savedBook = bookRepository.save(bookMapper.mapToEntity(book));
-        return bookMapper.mapToDto(savedBook);
+    private BookEntity createBookEntity(BookDto bookDto, AuthorDto author, CategoryDto category) {
+        return bookMapper.mapToEntity(bookDto.update(author, category));
     }
 }

@@ -38,6 +38,8 @@ public class DataInitializerComponent {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
+            randomAlphabetic(10),
+            BigDecimal.valueOf(20.0),
             BigDecimal.valueOf(20.0),
             100L,
             randomNumeric(10),

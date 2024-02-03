@@ -18,9 +18,11 @@ public class BookComponent {
     }
 
     public BookEntity createBook(String title,
+                                 String subtitle,
                                  String description,
                                  String summary,
-                                 BigDecimal price,
+                                 BigDecimal ebookPrice,
+                                 BigDecimal printedBookPrice,
                                  Long numberOfPages,
                                  String isbn,
                                  LocalDateTime publicationDate,
@@ -29,9 +31,11 @@ public class BookComponent {
         return bookRepository.save(
             BookBuilder.createBookEntity(
                 title,
+                subtitle,
                 description,
                 summary,
-                price,
+                ebookPrice,
+                printedBookPrice,
                 numberOfPages,
                 isbn,
                 publicationDate,

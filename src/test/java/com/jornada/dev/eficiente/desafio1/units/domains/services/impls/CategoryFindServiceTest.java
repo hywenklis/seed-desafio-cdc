@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.CategoryDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.CategoryFindServiceImpls;
+import com.jornada.dev.eficiente.desafio1.domains.services.impls.CategoryFindServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ class CategoryFindServiceTest extends UnitTestAbstract {
     private CategoryDomainMapper categoryMapper;
 
     @InjectMocks
-    private CategoryFindServiceImpls categoryFindServiceImpls;
+    private CategoryFindServiceImpl categoryFindServiceImpls;
 
     @Test
     @DisplayName("Should return category when found in the database")

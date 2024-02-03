@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -31,18 +32,20 @@ public class BookEntity {
     private UUID id;
 
     private String title;
+    private String subtitle;
     private String description;
     private String summary;
     private Long numberOfPages;
-    private BigDecimal price;
+    private BigDecimal ebookPrice;
+    private BigDecimal printedBookPrice;
     private String isbn;
     private LocalDateTime publicationDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 

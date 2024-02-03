@@ -24,3 +24,11 @@ management:
     web:
       exposure:
         include: "*"
+
+social-media:
+  facebook:
+    url: https://www.facebook.com/sharer/sharer.php
+    icon: https://www.facebook.com/icon
+  twitter:
+    url: https://twitter.com/intent/tweet
+    icon: https://twitter.com/icon

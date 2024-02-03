@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorFindServiceImpls implements AuthorFindService {
+public class AuthorFindServiceImpl implements AuthorFindService {
 
     private final AuthorRepository authorRepository;
     private final AuthorDomainMapper authorMapper;

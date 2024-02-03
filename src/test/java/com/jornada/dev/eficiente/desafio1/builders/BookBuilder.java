@@ -1,8 +1,10 @@
 package com.jornada.dev.eficiente.desafio1.builders;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDetailsDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.SocialMediaDto;
 import com.jornada.dev.eficiente.desafio1.domains.entities.AuthorEntity;
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
 import com.jornada.dev.eficiente.desafio1.domains.entities.CategoryEntity;
@@ -14,9 +16,11 @@ import java.util.UUID;
 public class BookBuilder {
 
     public static BookRequest createBookRequest(String title,
+                                                String subtitle,
                                                 String description,
                                                 String summary,
-                                                BigDecimal price,
+                                                BigDecimal ebookPrice,
+                                                BigDecimal printedBookPrice,
                                                 Long numberOfPages,
                                                 String isbn,
                                                 LocalDateTime publicationDate,
@@ -24,9 +28,11 @@ public class BookBuilder {
                                                 String authorEmail) {
         return BookRequest.builder()
             .title(title)
+            .subtitle(subtitle)
             .description(description)
             .summary(summary)
-            .price(price)
+            .ebookPrice(ebookPrice)
+            .printedBookPrice(printedBookPrice)
             .numberOfPages(numberOfPages)
             .isbn(isbn)
             .publicationDate(publicationDate)
@@ -35,34 +41,65 @@ public class BookBuilder {
             .build();
     }
 
+    public static BookDetailsDto createBookDetailsDto(String accessUpdates,
+                                                      BigDecimal ebookAndPrintedBookPrice,
+                                                      SocialMediaDto socialMedia) {
+        return BookDetailsDto.builder()
+            .accessUpdates(accessUpdates)
+            .ebookAndPrintedBookPrice(ebookAndPrintedBookPrice)
+            .socialMedia(socialMedia)
+            .build();
+    }
+
+    public static SocialMediaDto createSocialMediaDto(String linkFacebook,
+                                                String linkTwitter,
+                                                String iconFacebookUrl,
+                                                String iconTwitterUrl) {
+
+        return SocialMediaDto.builder()
+            .linkFacebook(linkFacebook)
+            .linkTwitter(linkTwitter)
+            .iconFacebookUrl(iconFacebookUrl)
+            .iconTwitterUrl(iconTwitterUrl)
+            .build();
+    }
+
     public static BookDto createBookDto(String title,
+                                        String subtitle,
                                         String description,
                                         String summary,
-                                        BigDecimal price,
+                                        BigDecimal ebookPrice,
+                                        BigDecimal printedBookPrice,
                                         Long numberOfPages,
                                         String isbn,
                                         LocalDateTime publicationDate,
                                         CategoryDto categoryDto,
-                                        AuthorDto authorDto) {
+                                        AuthorDto authorDto,
+                                        BookDetailsDto bookDetails) {
         return BookDto.builder()
             .title(title)
+            .subtitle(subtitle)
             .description(description)
             .summary(summary)
-            .price(price)
+            .ebookPrice(ebookPrice)
+            .printedBookPrice(printedBookPrice)
             .numberOfPages(numberOfPages)
             .isbn(isbn)
             .publicationDate(publicationDate)
             .category(categoryDto)
             .author(authorDto)
+            .bookDetails(bookDetails)
             .createDate(LocalDateTime.now())
             .updateDate(LocalDateTime.now())
             .build();
     }
 
     public static BookEntity createBookEntity(String title,
+                                              String subtitle,
                                               String description,
                                               String summary,
-                                              BigDecimal price,
+                                              BigDecimal ebookPrice,
+                                              BigDecimal printedBookPrice,
                                               Long numberOfPages,
                                               String isbn,
                                               LocalDateTime publicationDate,
@@ -71,9 +108,11 @@ public class BookBuilder {
         return BookEntity.builder()
             .id(UUID.randomUUID())
             .title(title)
+            .subtitle(subtitle)
             .description(description)
             .summary(summary)
-            .price(price)
+            .ebookPrice(ebookPrice)
+            .printedBookPrice(printedBookPrice)
             .numberOfPages(numberOfPages)
             .isbn(isbn)
             .publicationDate(publicationDate)

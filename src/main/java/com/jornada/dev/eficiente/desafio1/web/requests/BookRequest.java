@@ -21,6 +21,9 @@ public record BookRequest(@NotBlank(message = "Title is required")
                           @Unique(value = BOOK_TITLE, message = "Title must be unique")
                           String title,
 
+                          @NotBlank(message = "SubTitle is required")
+                          String subtitle,
+
                           @NotBlank(message = "Description is required")
                           @Size(max = 500, message = "Description cannot exceed 500 characters")
                           String description,
@@ -30,7 +33,11 @@ public record BookRequest(@NotBlank(message = "Title is required")
 
                           @NotNull(message = "Price is required")
                           @DecimalMin(value = "20", message = "Price must be at least 20")
-                          BigDecimal price,
+                          BigDecimal ebookPrice,
+
+                          @NotNull(message = "Price is required")
+                          @DecimalMin(value = "20", message = "Price must be at least 20")
+                          BigDecimal printedBookPrice,
 
                           @NotNull(message = "Number of pages is required")
                           @Min(value = 100, message = "Number of pages must be at least 100")

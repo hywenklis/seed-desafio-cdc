@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface BookDomainMapper {
 
+    @Mapping(target = "bookDetails", ignore = true)
     BookDto mapToDto(BookEntity bookEntity);
 
     @Mapping(target = "id", ignore = true)
