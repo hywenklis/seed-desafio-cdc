@@ -62,15 +62,15 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.title").value(request.title()))
+            .andExpect(jsonPath("$.subtitle").value(request.subtitle()))
             .andExpect(jsonPath("$.description").value(request.description()))
             .andExpect(jsonPath("$.ebookPrice").value(request.ebookPrice()))
+            .andExpect(jsonPath("$.printedBookPrice").value(request.printedBookPrice()))
             .andExpect(jsonPath("$.numberOfPages").value(request.numberOfPages()))
             .andExpect(jsonPath("$.isbn").value(request.isbn()))
             .andExpect(
                 jsonPath("$.publicationDate").value(request.publicationDate().format(formatter)))
-            .andExpect(jsonPath("$.category.id").value(category.getId().toString()))
             .andExpect(jsonPath("$.category.name").value(category.getName()))
-            .andExpect(jsonPath("$.author.id").value(author.getId().toString()))
             .andExpect(jsonPath("$.author.name").value(author.getName()))
             .andExpect(jsonPath("$.author.email").value(author.getEmail()))
             .andExpect(jsonPath("$.author.description").value(author.getDescription()));
