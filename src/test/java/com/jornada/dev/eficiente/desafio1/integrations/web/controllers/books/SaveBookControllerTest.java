@@ -215,8 +215,8 @@ class SaveBookControllerTest extends IntegrationTestAbstract {
             randomAlphabetic(10),
             randomAlphabetic(10),
             randomAlphabetic(10),
-            BigDecimal.valueOf(19.99), // less than 20
-            BigDecimal.valueOf(19.99), // less than 20
+            BigDecimal.valueOf(19.99),
+            BigDecimal.valueOf(20.99),
             100L,
             randomNumeric(10),
             LocalDateTime.of(publicationDate.getYear(),
