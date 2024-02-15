@@ -5,6 +5,7 @@ import com.jornada.dev.eficiente.desafio1.components.AuthorComponent;
 import com.jornada.dev.eficiente.desafio1.components.BookComponent;
 import com.jornada.dev.eficiente.desafio1.components.CategoryComponent;
 import com.jornada.dev.eficiente.desafio1.components.DataInitializerComponent;
+import com.jornada.dev.eficiente.desafio1.domains.properties.SocialMediaProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,4 +32,7 @@ public abstract class IntegrationTestAbstract {
 
     @Autowired
     protected DataInitializerComponent dataInitializerComponent;
+
+    @Autowired
+    protected SocialMediaProperty socialMediaProperty;
 }

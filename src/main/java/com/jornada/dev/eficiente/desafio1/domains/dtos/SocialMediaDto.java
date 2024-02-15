@@ -9,6 +9,7 @@ public record SocialMediaDto(String linkFacebook,
                              String iconFacebookUrl,
                              String iconTwitterUrl) {
 
+    /* TODO adicionar testes */
     public static SocialMediaDto fromConfig(SocialMediaProperty socialMediaProperty,
                                             BookDto bookDto) {
         return new SocialMediaDto(
