@@ -4,12 +4,16 @@ import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_ISBN;
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_TITLE;
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.COUNTRY_NAME;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.STATE_NAME;
 
 import com.jornada.dev.eficiente.desafio1.domains.annotations.Unique;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
 import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.CategoryFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.CountryFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.StateFindService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Map;
@@ -26,6 +30,8 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     private final AuthorFindService authorFindService;
     private final CategoryFindService categoryFindService;
     private final BookFindService bookFindService;
+    private final CountryFindService countryFindService;
+    private final StateFindService stateFindService;
 
     private Map<UniqueType, Function<String, Optional<?>>> repositoryMap;
     private UniqueType type;
@@ -38,7 +44,9 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
             AUTHOR_EMAIL, authorFindService::findAuthorByEmail,
             CATEGORY_NAME, categoryFindService::findCategoryByName,
             BOOK_TITLE, bookFindService::findBookByTitle,
-            BOOK_ISBN, bookFindService::findBookByIsbn
+            BOOK_ISBN, bookFindService::findBookByIsbn,
+            COUNTRY_NAME, countryFindService::findCountryByName,
+            STATE_NAME, stateFindService::findStateByName
         );
     }
 

@@ -4,5 +4,7 @@ public enum UniqueType {
     AUTHOR_EMAIL,
     CATEGORY_NAME,
     BOOK_TITLE,
-    BOOK_ISBN
+    BOOK_ISBN,
+    COUNTRY_NAME,
+    STATE_NAME
 }

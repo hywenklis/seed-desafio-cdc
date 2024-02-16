@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.web.controllers;
+package com.jornada.dev.eficiente.desafio1.web.controllers.author;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
 import com.jornada.dev.eficiente.desafio1.domains.services.AuthorRegistrationService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/authors")
 @RequiredArgsConstructor
 @Tag(name = "Author", description = "Endpoint related to authorEmail registration")
-public class AuthorController {
+public class SaveAuthorController {
 
     private final AuthorRegistrationService service;
     private final AuthorMapperRequest mapperRequest;

@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.web.controllers;
+package com.jornada.dev.eficiente.desafio1.web.controllers.category;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.services.CategoryRegistrationService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/categories")
 @RequiredArgsConstructor
 @Tag(name = "Category", description = "Endpoint related to categoryName registration")
-public class CategoryController {
+public class SaveCategoryController {
 
     private final CategoryRegistrationService service;
     private final CategoryMapperRequest mapperRequest;

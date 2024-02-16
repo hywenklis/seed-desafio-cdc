@@ -3,6 +3,7 @@ package com.jornada.dev.eficiente.desafio1.domains.services.impls;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDetailsDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.SocialMediaDto;
+import com.jornada.dev.eficiente.desafio1.domains.exceptions.NotFoundException;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.properties.SocialMediaProperty;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
@@ -39,11 +40,10 @@ public class BookFindServiceImpl implements BookFindService {
 
     @Override
     public Optional<BookDto> findBookDetails(UUID id) {
-        return bookRepository.findById(id)
-            .map(bookEntity -> {
-                BookDto bookDto = bookMapper.mapToDto(bookEntity);
-                return addBookDetails(bookDto);
-            });
+        return Optional.ofNullable(bookRepository.findById(id)
+            .map(bookMapper::mapToDto)
+            .map(this::addBookDetails)
+            .orElseThrow(() -> new NotFoundException("bookId", "Book not found with id: " + id)));
     }
 
     private BookDto addBookDetails(BookDto bookDto) {

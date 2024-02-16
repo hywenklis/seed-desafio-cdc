@@ -6,7 +6,6 @@ import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
 import com.jornada.dev.eficiente.desafio1.domains.exceptions.NotFoundException;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
-import com.jornada.dev.eficiente.desafio1.domains.properties.SocialMediaProperty;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookRegistrationService;
@@ -23,7 +22,6 @@ public class BookRegistrationServiceImpl implements BookRegistrationService {
     private final BookDomainMapper bookMapper;
     private final AuthorFindService authorFindService;
     private final CategoryFindService categoryFindService;
-    private final SocialMediaProperty socialMediaProperty;
 
     @Override
     @Transactional
