@@ -7,7 +7,6 @@ import com.jornada.dev.eficiente.desafio1.domains.exceptions.NotFoundException;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.StateDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.StateRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.CountryFindService;
-import com.jornada.dev.eficiente.desafio1.domains.services.StateFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.StateRegistrationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class StateRegistrationServiceImpl implements StateRegistrationService {
 
     private final CountryFindService countryFindService;
-    private final StateFindService stateFindService;
     private final StateRepository stateRepository;
     private final StateDomainMapper mapper;
 

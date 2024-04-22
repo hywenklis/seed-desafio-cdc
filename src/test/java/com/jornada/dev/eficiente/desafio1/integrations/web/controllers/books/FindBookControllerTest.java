@@ -12,6 +12,7 @@ import com.jornada.dev.eficiente.desafio1.integrations.IntegrationTestAbstract;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
 @DisplayName("GET /v1/books")
 class FindBookControllerTest extends IntegrationTestAbstract {
@@ -95,11 +96,16 @@ class FindBookControllerTest extends IntegrationTestAbstract {
     }
 
     @Test
-    @DisplayName("Should return empty when there are no details of a book")
+    @DisplayName("Should return not found when there are no details of a book for the given id")
     void test_success_book_details_empty() throws Exception {
-        mockMvc.perform(get("/v1/books/{id}", UUID.randomUUID())
+        var randomId = UUID.randomUUID();
+        mockMvc.perform(get("/v1/books/{id}", randomId)
                 .contentType(APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").doesNotExist());
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.errors[0].field").value("bookId"))
+            .andExpect(jsonPath("$.errors[0].message").value("Book not found with id: " + randomId))
+            .andExpect(jsonPath("$.errors[0].httpStatus").value("NOT_FOUND"))
+            .andExpect(jsonPath("$.errors[0].errorCode").value(HttpStatus.NOT_FOUND.value()))
+            .andExpect(jsonPath("$.errors[0].timestamp").isNotEmpty());
     }
 }

@@ -4,6 +4,8 @@ import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.AUTHOR
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_ISBN;
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.BOOK_TITLE;
 import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.CATEGORY_NAME;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.COUNTRY_NAME;
+import static com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType.STATE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,10 +17,14 @@ import com.jornada.dev.eficiente.desafio1.domains.annotations.validators.UniqueV
 import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
 import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.CountryDto;
+import com.jornada.dev.eficiente.desafio1.domains.dtos.StateDto;
 import com.jornada.dev.eficiente.desafio1.domains.enuns.UniqueType;
 import com.jornada.dev.eficiente.desafio1.domains.services.AuthorFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.BookFindService;
 import com.jornada.dev.eficiente.desafio1.domains.services.CategoryFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.CountryFindService;
+import com.jornada.dev.eficiente.desafio1.domains.services.StateFindService;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Optional;
@@ -40,6 +46,12 @@ class UniqueValidatorTest extends UnitTestAbstract {
 
     @Mock
     private BookFindService bookFindService;
+
+    @Mock
+    private CountryFindService countryFindService;
+
+    @Mock
+    private StateFindService stateFindService;
 
     @Mock
     private ConstraintValidatorContext context;
@@ -90,11 +102,13 @@ class UniqueValidatorTest extends UnitTestAbstract {
         var author = AuthorDto.builder().email(nonUniqueValue).build();
         var category = CategoryDto.builder().name(nonUniqueValue).build();
         var book = BookDto.builder().title(nonUniqueValue).isbn(nonUniqueValue).build();
+        var country = CountryDto.builder().name(nonUniqueValue).build();
+        var state = StateDto.builder().name(nonUniqueValue).build();
 
         when(uniqueAnnotation.value()).thenReturn(type);
 
         // Mock repository responses based on type
-        mockRepositoryByType(type, nonUniqueValue, author, category, book);
+        mockRepositoryByType(type, nonUniqueValue, author, category, book, country, state);
 
         // When
         uniqueValidator.initialize(uniqueAnnotation);
@@ -136,7 +150,9 @@ class UniqueValidatorTest extends UnitTestAbstract {
                                       String nonUniqueValue,
                                       AuthorDto author,
                                       CategoryDto category,
-                                      BookDto book) {
+                                      BookDto book,
+                                      CountryDto country,
+                                      StateDto state) {
         if (type == AUTHOR_EMAIL) {
             when(authorFindService.findAuthorByEmail(nonUniqueValue)).thenReturn(
                 Optional.of(author));
@@ -147,6 +163,11 @@ class UniqueValidatorTest extends UnitTestAbstract {
             when(bookFindService.findBookByTitle(nonUniqueValue)).thenReturn(Optional.of(book));
         } else if (type == BOOK_ISBN) {
             when(bookFindService.findBookByIsbn(nonUniqueValue)).thenReturn(Optional.of(book));
+        } else if (type == COUNTRY_NAME) {
+            when(countryFindService.findCountryByName(nonUniqueValue)).thenReturn(
+                Optional.of(country));
+        } else if (type == STATE_NAME) {
+            when(stateFindService.findStateByName(nonUniqueValue)).thenReturn(Optional.of(state));
         }
     }
 
@@ -167,6 +188,14 @@ class UniqueValidatorTest extends UnitTestAbstract {
             case BOOK_ISBN:
                 verify(bookFindService, times(times)).findBookByIsbn(value);
                 verifyNoInteractions(authorFindService, categoryFindService);
+                break;
+            case COUNTRY_NAME:
+                verify(countryFindService, times(times)).findCountryByName(value);
+                verifyNoInteractions(countryFindService);
+                break;
+            case STATE_NAME:
+                verify(stateFindService, times(times)).findStateByName(value);
+                verifyNoInteractions(stateFindService);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported validation type: " + type);
