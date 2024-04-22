@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
+import com.jornada.dev.eficiente.desafio1.domains.entities.StateEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
@@ -14,13 +15,18 @@ public class DataInitializerComponent {
     private final AuthorComponent authorComponent;
     private final CategoryComponent categoryComponent;
     private final BookComponent bookComponent;
+    private final StateComponent stateComponent;
+    private final CountryComponent countryComponent;
 
     public DataInitializerComponent(AuthorComponent authorComponent,
                                     CategoryComponent categoryComponent,
-                                    BookComponent bookComponent) {
+                                    BookComponent bookComponent, StateComponent stateComponent,
+                                    CountryComponent countryComponent) {
         this.authorComponent = authorComponent;
         this.categoryComponent = categoryComponent;
         this.bookComponent = bookComponent;
+        this.stateComponent = stateComponent;
+        this.countryComponent = countryComponent;
     }
 
     @Transactional
@@ -47,5 +53,11 @@ public class DataInitializerComponent {
             category,
             author
         );
+    }
+
+    @Transactional
+    public StateEntity initializeStateData() {
+        var country = countryComponent.createCountry(randomAlphabetic(10));
+        return stateComponent.createState(randomAlphabetic(10), country);
     }
 }

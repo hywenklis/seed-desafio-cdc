@@ -4,6 +4,7 @@ import com.jornada.dev.eficiente.desafio1.domains.dtos.CountryDto;
 import com.jornada.dev.eficiente.desafio1.domains.mappers.CountryDomainMapper;
 import com.jornada.dev.eficiente.desafio1.domains.repositories.CountryRepository;
 import com.jornada.dev.eficiente.desafio1.domains.services.CountryFindService;
+import java.util.Locale;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class CountryFindServiceImpl implements CountryFindService {
 
     @Override
     public Optional<CountryDto> findCountryByName(String name) {
-        return countryRepository.findByName(name).map(mapper::mapToDto);
+        return countryRepository
+            .findByName(name.toLowerCase(Locale.ROOT))
+            .map(mapper::mapToDto);
     }
 }

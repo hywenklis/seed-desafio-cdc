@@ -1,7 +1,7 @@
 package com.jornada.dev.eficiente.desafio1.domains.dtos;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.Locale;
 import java.util.UUID;
 import lombok.Builder;
 
@@ -13,6 +13,8 @@ public record StateDto(UUID id,
                        LocalDateTime updateDate) {
 
     public StateDto update(CountryDto country) {
-        return toBuilder().country(country).build();
+        return toBuilder()
+            .name(name.toLowerCase(Locale.ROOT))
+            .country(country).build();
     }
 }

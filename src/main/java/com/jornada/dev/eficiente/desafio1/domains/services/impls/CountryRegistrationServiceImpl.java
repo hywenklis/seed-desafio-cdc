@@ -19,8 +19,13 @@ public class CountryRegistrationServiceImpl implements CountryRegistrationServic
     @Override
     @Transactional
     public CountryDto save(CountryDto countryDto) {
-        CountryEntity savedCountry = countryRepository.save(mapper.mapToEntity(countryDto));
+        CountryEntity countryEntity = createCountryEntity(countryDto);
+        CountryEntity savedCountry = countryRepository.save(countryEntity);
         return mapper.mapToDto(savedCountry);
+    }
+
+    private CountryEntity createCountryEntity(CountryDto countryDto) {
+        return mapper.mapToEntity(countryDto.update());
     }
 
 }
