@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.integrations.web.controllers;
+package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.category;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;

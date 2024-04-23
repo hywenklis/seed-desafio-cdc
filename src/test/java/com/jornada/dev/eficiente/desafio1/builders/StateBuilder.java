@@ -15,7 +15,7 @@ public class StateBuilder {
     public static StateRequest createStateRequest(String name,
                                                   CountryRequest countryRequest) {
         return StateRequest.builder()
-            .name(name.toLowerCase(Locale.ROOT))
+            .name(name)
             .country(countryRequest)
             .build();
 
