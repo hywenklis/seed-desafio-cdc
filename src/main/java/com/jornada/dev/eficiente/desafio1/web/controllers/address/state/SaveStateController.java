@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.web.controllers.address;
+package com.jornada.dev.eficiente.desafio1.web.controllers.address.state;
 
 import com.jornada.dev.eficiente.desafio1.domains.dtos.StateDto;
 import com.jornada.dev.eficiente.desafio1.domains.services.StateRegistrationService;

@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
+package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.author;
 
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
 import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;

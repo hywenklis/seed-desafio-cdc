@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.address.state;
+package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.address.country;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -11,32 +11,28 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-@DisplayName("GET /v1/states")
-class FindStateControllerTest extends IntegrationTestAbstract {
+@DisplayName("GET /v1/countries")
+class FindCountryControllerTest extends IntegrationTestAbstract {
 
     @Test
     void test_success_find_state() throws Exception {
-        var state = dataInitializerComponent.initializeStateData();
+        var country = dataInitializerComponent.initializeCountryData();
 
-        mockMvc.perform(get("/v1/states")
-                .param("name", state.getName())
+        mockMvc.perform(get("/v1/countries")
+                .param("name", country.getName())
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isNotEmpty())
-            .andExpect(jsonPath("$.id").value(state.getId().toString()))
-            .andExpect(jsonPath("$.name").value(state.getName()))
+            .andExpect(jsonPath("$.id").value(country.getId().toString()))
+            .andExpect(jsonPath("$.name").value(country.getName()))
             .andExpect(jsonPath("$.createDate").isNotEmpty())
-            .andExpect(jsonPath("$.updateDate").isNotEmpty())
-            .andExpect(jsonPath("$.country.id").value(state.getCountry().getId().toString()))
-            .andExpect(jsonPath("$.country.name").value(state.getCountry().getName()))
-            .andExpect(jsonPath("$.country.createDate").isNotEmpty())
-            .andExpect(jsonPath("$.country.updateDate").isNotEmpty());
+            .andExpect(jsonPath("$.updateDate").isNotEmpty());
     }
 
     @Test
-    @DisplayName("shouldn't return anything if it doesn't find the name of the state")
-    void test_success_state_empty() throws Exception {
-        mockMvc.perform(get("/v1/states")
+    @DisplayName("shouldn't return anything if it doesn't find the name of the country")
+    void test_success_country_empty() throws Exception {
+        mockMvc.perform(get("/v1/countries")
                 .param("name", randomAlphabetic(10))
                 .contentType(APPLICATION_JSON))
             .andExpect(status().isOk())

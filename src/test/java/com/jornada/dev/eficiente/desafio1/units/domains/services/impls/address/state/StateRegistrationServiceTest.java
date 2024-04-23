@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
+package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.address.state;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CountryBuilder.createCountryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CountryBuilder.createCountryEntity;

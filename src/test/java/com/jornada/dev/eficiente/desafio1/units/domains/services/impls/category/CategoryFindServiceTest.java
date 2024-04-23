@@ -1,4 +1,4 @@
-package com.jornada.dev.eficiente.desafio1.units.domains.services.impls;
+package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.category;
 
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
 import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;

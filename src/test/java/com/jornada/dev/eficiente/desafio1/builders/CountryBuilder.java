@@ -11,7 +11,7 @@ public class CountryBuilder {
 
     public static CountryRequest createCountryRequest(String name) {
         return CountryRequest.builder()
-            .name(name.toLowerCase(Locale.ROOT))
+            .name(name)
             .build();
 
     }

@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
+import com.jornada.dev.eficiente.desafio1.domains.entities.CountryEntity;
 import com.jornada.dev.eficiente.desafio1.domains.entities.StateEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -59,5 +60,10 @@ public class DataInitializerComponent {
     public StateEntity initializeStateData() {
         var country = countryComponent.createCountry(randomAlphabetic(10));
         return stateComponent.createState(randomAlphabetic(10), country);
+    }
+
+    @Transactional
+    public CountryEntity initializeCountryData() {
+        return countryComponent.createCountry(randomAlphabetic(10));
     }
 }
