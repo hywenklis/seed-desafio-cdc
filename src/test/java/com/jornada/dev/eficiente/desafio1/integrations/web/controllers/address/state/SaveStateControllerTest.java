@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("POST /v1/books/register")
+@DisplayName("POST /v1/states/register")
 class SaveStateControllerTest extends IntegrationTestAbstract {
 
     @Test
@@ -85,7 +85,7 @@ class SaveStateControllerTest extends IntegrationTestAbstract {
     }
 
     @Test
-    @DisplayName("Should return 404 Not Found when country is not found")
+    @DisplayName("Should return 404 Not Found when country name is not found")
     void registration_NonExistentCountry_NotFound() throws Exception {
         var countryRequest = createCountryRequest(randomAlphabetic(10));
         var request = createStateRequest(randomAlphabetic(10), countryRequest);
