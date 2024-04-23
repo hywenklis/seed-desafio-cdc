@@ -8,11 +8,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.jornada.dev.eficiente.desafio1.domains.dtos.BookDto;
-import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
-import com.jornada.dev.eficiente.desafio1.domains.mappers.BookDomainMapper;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.BookRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.BookFindServiceImpl;
+import com.jornada.dev.eficiente.desafio1.domains.book.dtos.BookDto;
+import com.jornada.dev.eficiente.desafio1.domains.book.entities.BookEntity;
+import com.jornada.dev.eficiente.desafio1.domains.book.mappers.BookDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.book.repositories.BookRepository;
+import com.jornada.dev.eficiente.desafio1.domains.book.services.impls.BookFindServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.List;
 import java.util.Optional;

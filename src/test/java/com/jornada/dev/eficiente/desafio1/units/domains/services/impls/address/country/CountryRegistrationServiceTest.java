@@ -1,17 +1,17 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.address.country;
 
-import static com.jornada.dev.eficiente.desafio1.builders.CountryBuilder.createCountryDto;
-import static com.jornada.dev.eficiente.desafio1.builders.CountryBuilder.createCountryEntity;
+import static com.jornada.dev.eficiente.desafio1.builders.country.CountryBuilder.createCountryDto;
+import static com.jornada.dev.eficiente.desafio1.builders.country.CountryBuilder.createCountryEntity;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.jornada.dev.eficiente.desafio1.domains.dtos.CountryDto;
-import com.jornada.dev.eficiente.desafio1.domains.mappers.CountryDomainMapper;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.CountryRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.CountryRegistrationServiceImpl;
+import com.jornada.dev.eficiente.desafio1.domains.address.country.dtos.CountryDto;
+import com.jornada.dev.eficiente.desafio1.domains.address.country.mappers.CountryDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.address.country.repositories.CountryRepository;
+import com.jornada.dev.eficiente.desafio1.domains.address.country.services.impls.CountryRegistrationServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

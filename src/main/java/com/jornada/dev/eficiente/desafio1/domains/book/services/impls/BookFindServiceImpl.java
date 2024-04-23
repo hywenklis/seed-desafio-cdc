@@ -1,0 +1,68 @@
+package com.jornada.dev.eficiente.desafio1.domains.book.services.impls;
+
+import com.jornada.dev.eficiente.desafio1.domains.book.dtos.BookDetailsDto;
+import com.jornada.dev.eficiente.desafio1.domains.book.dtos.BookDto;
+import com.jornada.dev.eficiente.desafio1.domains.book.dtos.SocialMediaDto;
+import com.jornada.dev.eficiente.desafio1.domains.book.mappers.BookDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.book.repositories.BookRepository;
+import com.jornada.dev.eficiente.desafio1.domains.book.services.BookFindService;
+import com.jornada.dev.eficiente.desafio1.domains.exceptions.NotFoundException;
+import com.jornada.dev.eficiente.desafio1.domains.properties.SocialMediaProperty;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class BookFindServiceImpl implements BookFindService {
+
+    private final BookRepository bookRepository;
+    private final BookDomainMapper bookMapper;
+    private final SocialMediaProperty socialMediaProperty;
+
+    @Override
+    public Optional<BookDto> findBookByTitle(String title) {
+        return bookRepository.findByTitle(title).map(bookMapper::mapToDto);
+    }
+
+    @Override
+    public Optional<BookDto> findBookByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn).map(bookMapper::mapToDto);
+    }
+
+    @Override
+    public Optional<List<BookDto>> findAll() {
+        return Optional.of(bookRepository.findAll().stream().map(bookMapper::mapToDto).toList());
+    }
+
+    @Override
+    public Optional<BookDto> findBookDetails(UUID id) {
+        return Optional.ofNullable(bookRepository.findById(id)
+            .map(bookMapper::mapToDto)
+            .map(this::addBookDetails)
+            .orElseThrow(() -> new NotFoundException("bookId", "Book not found with id: " + id)));
+    }
+
+    private BookDto addBookDetails(BookDto bookDto) {
+        SocialMediaDto socialMediaDto = createSocialMediaDto(bookDto);
+        BigDecimal ebookAndPrintedBookPrice = calculateTotalPrice(bookDto);
+        BookDetailsDto bookDetailsDto =
+            new BookDetailsDto("Você terá acesso às futuras atualizações do livro",
+                ebookAndPrintedBookPrice,
+                socialMediaDto
+            );
+        return bookDto.toBuilder().bookDetails(bookDetailsDto).build();
+    }
+
+    private SocialMediaDto createSocialMediaDto(BookDto bookDto) {
+        return SocialMediaDto.fromConfig(socialMediaProperty, bookDto);
+    }
+
+    private BigDecimal calculateTotalPrice(BookDto bookDto) {
+        return bookDto.ebookPrice().add(bookDto.printedBookPrice());
+    }
+}
+

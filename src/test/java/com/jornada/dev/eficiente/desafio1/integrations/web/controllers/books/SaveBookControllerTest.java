@@ -1,6 +1,6 @@
 package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.books;
 
-import static com.jornada.dev.eficiente.desafio1.builders.BookBuilder.createBookRequest;
+import static com.jornada.dev.eficiente.desafio1.builders.book.BookBuilder.createBookRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

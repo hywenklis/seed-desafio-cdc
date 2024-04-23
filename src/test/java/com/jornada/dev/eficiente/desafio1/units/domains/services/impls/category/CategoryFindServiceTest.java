@@ -1,17 +1,17 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.category;
 
-import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryDto;
-import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryEntity;
+import static com.jornada.dev.eficiente.desafio1.builders.category.CategoryBuilder.createCategoryDto;
+import static com.jornada.dev.eficiente.desafio1.builders.category.CategoryBuilder.createCategoryEntity;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.jornada.dev.eficiente.desafio1.domains.dtos.CategoryDto;
-import com.jornada.dev.eficiente.desafio1.domains.mappers.CategoryDomainMapper;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.CategoryRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.CategoryFindServiceImpl;
+import com.jornada.dev.eficiente.desafio1.domains.category.dtos.CategoryDto;
+import com.jornada.dev.eficiente.desafio1.domains.category.mappers.CategoryDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.category.repositories.CategoryRepository;
+import com.jornada.dev.eficiente.desafio1.domains.category.services.impls.CategoryFindServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;

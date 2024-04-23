@@ -1,6 +1,6 @@
 package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.address.country;
 
-import static com.jornada.dev.eficiente.desafio1.builders.CountryBuilder.createCountryRequest;
+import static com.jornada.dev.eficiente.desafio1.builders.country.CountryBuilder.createCountryRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

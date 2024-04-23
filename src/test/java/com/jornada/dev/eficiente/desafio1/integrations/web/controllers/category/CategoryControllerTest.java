@@ -1,6 +1,6 @@
 package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.category;
 
-import static com.jornada.dev.eficiente.desafio1.builders.CategoryBuilder.createCategoryRequest;
+import static com.jornada.dev.eficiente.desafio1.builders.category.CategoryBuilder.createCategoryRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

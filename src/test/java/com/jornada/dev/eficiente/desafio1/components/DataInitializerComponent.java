@@ -3,9 +3,14 @@ package com.jornada.dev.eficiente.desafio1.components;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
-import com.jornada.dev.eficiente.desafio1.domains.entities.BookEntity;
-import com.jornada.dev.eficiente.desafio1.domains.entities.CountryEntity;
-import com.jornada.dev.eficiente.desafio1.domains.entities.StateEntity;
+import com.jornada.dev.eficiente.desafio1.components.author.AuthorComponent;
+import com.jornada.dev.eficiente.desafio1.components.book.BookComponent;
+import com.jornada.dev.eficiente.desafio1.components.category.CategoryComponent;
+import com.jornada.dev.eficiente.desafio1.components.country.CountryComponent;
+import com.jornada.dev.eficiente.desafio1.components.state.StateComponent;
+import com.jornada.dev.eficiente.desafio1.domains.address.country.entities.CountryEntity;
+import com.jornada.dev.eficiente.desafio1.domains.address.state.entities.StateEntity;
+import com.jornada.dev.eficiente.desafio1.domains.book.entities.BookEntity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.jornada.dev.eficiente.desafio1.integrations.web.controllers.author;
 
-import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorRequest;
+import static com.jornada.dev.eficiente.desafio1.builders.author.AuthorBuilder.createAuthorRequest;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

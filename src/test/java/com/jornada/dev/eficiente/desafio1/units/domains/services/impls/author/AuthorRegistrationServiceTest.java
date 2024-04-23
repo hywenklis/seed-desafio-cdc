@@ -1,17 +1,17 @@
 package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.author;
 
-import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorDto;
-import static com.jornada.dev.eficiente.desafio1.builders.AuthorBuilder.createAuthorEntity;
+import static com.jornada.dev.eficiente.desafio1.builders.author.AuthorBuilder.createAuthorDto;
+import static com.jornada.dev.eficiente.desafio1.builders.author.AuthorBuilder.createAuthorEntity;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.jornada.dev.eficiente.desafio1.domains.dtos.AuthorDto;
-import com.jornada.dev.eficiente.desafio1.domains.mappers.AuthorDomainMapper;
-import com.jornada.dev.eficiente.desafio1.domains.repositories.AuthorRepository;
-import com.jornada.dev.eficiente.desafio1.domains.services.impls.AuthorRegistrationServiceImpl;
+import com.jornada.dev.eficiente.desafio1.domains.author.dtos.AuthorDto;
+import com.jornada.dev.eficiente.desafio1.domains.author.mappers.AuthorDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.author.repositories.AuthorRepository;
+import com.jornada.dev.eficiente.desafio1.domains.author.services.impls.AuthorRegistrationServiceImpl;
 import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
