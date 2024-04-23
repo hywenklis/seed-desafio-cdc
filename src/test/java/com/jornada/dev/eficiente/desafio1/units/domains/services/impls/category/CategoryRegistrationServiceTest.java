@@ -1,0 +1,57 @@
+package com.jornada.dev.eficiente.desafio1.units.domains.services.impls.category;
+
+import static com.jornada.dev.eficiente.desafio1.builders.category.CategoryBuilder.createCategoryDto;
+import static com.jornada.dev.eficiente.desafio1.builders.category.CategoryBuilder.createCategoryEntity;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.jornada.dev.eficiente.desafio1.domains.category.dtos.CategoryDto;
+import com.jornada.dev.eficiente.desafio1.domains.category.mappers.CategoryDomainMapper;
+import com.jornada.dev.eficiente.desafio1.domains.category.repositories.CategoryRepository;
+import com.jornada.dev.eficiente.desafio1.domains.category.services.impls.CategoryRegistrationServiceImpl;
+import com.jornada.dev.eficiente.desafio1.units.UnitTestAbstract;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+class CategoryRegistrationServiceTest extends UnitTestAbstract {
+
+    @Mock
+    private CategoryRepository categoryRepository;
+
+    @Mock
+    private CategoryDomainMapper mapper;
+
+    @InjectMocks
+    private CategoryRegistrationServiceImpl categoryRegistrationService;
+
+    @Test
+    @DisplayName("Should return success "
+        + "when registering an categoryName that does not exist in the database")
+    void save_category_success() {
+        // Given
+        var categoryDto = createCategoryDto(randomAlphabetic(10));
+        var categoryEntity = createCategoryEntity(categoryDto.name());
+
+        // Mock
+        when(mapper.mapToEntity(categoryDto)).thenReturn(categoryEntity);
+        when(mapper.mapToDto(categoryEntity)).thenReturn(categoryDto);
+        when(categoryRepository.save(categoryEntity)).thenReturn(categoryEntity);
+
+        // When
+        CategoryDto categorySaved = categoryRegistrationService.save(categoryDto);
+
+        // Then
+        assertThat(categorySaved).isNotNull();
+        assertThat(categorySaved.name()).isEqualTo(categoryDto.name());
+        assertThat(categorySaved.createDate()).isEqualTo(categoryDto.createDate());
+        assertThat(categorySaved.updateDate()).isEqualTo(categoryDto.updateDate());
+
+        // Verify
+        verify(categoryRepository, times(1)).save(categoryEntity);
+    }
+}

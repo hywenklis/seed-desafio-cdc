@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+social-media:
+  facebook:
+    url: https://www.facebook.com/sharer/sharer.php
+    icon: https://www.facebook.com/icon
+  twitter:
+    url: https://twitter.com/intent/tweet
+    icon: https://twitter.com/icon
